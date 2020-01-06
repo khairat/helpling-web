@@ -24,16 +24,16 @@ const Browse: NextPage = () => {
       <Header />
 
       <main className="bg-primary-dark">
-        <h1 className="text-5xl font-semibold">Browse</h1>
-        {loading && <Spinner className="mt-8" />}
+        <h1 className="text-5xl font-semibold mb-4">Browse</h1>
+        {loading && <Spinner className="mt-4" />}
         {!loading && requests.length === 0 && (
-          <p className="mt-4">
+          <p>
             Hallelujah! Everyone is fed and warm. Come back later to find people
             who have made requests.
           </p>
         )}
         {!loading && requests.length > 0 && (
-          <table className="mt-4 bg-primary rounded">
+          <table className="bg-primary rounded">
             <thead>
               <tr>
                 <th>Request</th>
