@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "helpling",
+  "regions": ["dub1", "sfo1"],
+  "build": {
+    "env": {
+      "FIREBASE_CONFIG": "@helpling-firebase_config"
+    }
+  }
+}

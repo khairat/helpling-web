@@ -1,0 +1,130 @@
+// fonts
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('/fonts/CircularStd-Book.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('/fonts/CircularStd-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('/fonts/CircularStd-Bold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+// tailwind
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// global
+
+a,
+button {
+  @apply cursor-pointer;
+
+  transition: 0.2s;
+}
+
+a {
+  @apply text-accent;
+}
+
+button,
+input {
+  &:focus {
+    @apply outline-none;
+  }
+}
+
+button {
+  @apply flex items-center justify-center bg-accent text-white px-8 py-4 rounded font-semibold;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+
+  &:active {
+    filter: brightness(0.8);
+  }
+}
+
+input,
+textarea {
+  @apply bg-primary-dark p-4 rounded outline-none w-full;
+}
+
+label {
+  @apply block my-8;
+
+  span {
+    @apply block mb-4 font-medium;
+  }
+
+  textarea {
+    min-height: 10em;
+  }
+}
+
+textarea {
+  min-height: 8em;
+}
+
+table {
+  @apply w-full;
+
+  thead {
+    tr {
+      @apply border-b border-gray-800;
+    }
+  }
+
+  tbody {
+    tr {
+      @apply border-t border-gray-900;
+    }
+  }
+
+  td,
+  th {
+    @apply align-middle text-left p-4;
+  }
+
+  th {
+    @apply font-semibold text-gray-500;
+  }
+}
+
+// layout
+
+#__next {
+  @apply flex flex-col;
+
+  min-height: 100vh;
+
+  main {
+    @apply flex flex-col flex-1 p-8;
+  }
+}
+
+// responsive
+
+@media (min-width: 640px) {
+  input,
+  textarea {
+    width: 20rem;
+  }
+}
