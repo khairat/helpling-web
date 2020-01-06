@@ -11,6 +11,10 @@ type StoreApi = StoreActionApi<State>
 
 const actions = {
   fetch: () => ({ setState }: StoreApi) => {
+    setState({
+      loading: true
+    })
+
     firebase
       .firestore()
       .collection('requests')
@@ -22,6 +26,7 @@ const actions = {
         })) as Request[]
 
         setState({
+          loading: false,
           requests
         })
       })
