@@ -1,7 +1,4 @@
-const pseudo = require('tailwindcss-pseudo')
-
 module.exports = {
-  plugins: [pseudo()],
   theme: {
     extend: {
       colors: {
@@ -28,5 +25,7 @@ module.exports = {
       }
     }
   },
-  variants: {}
+  variants: {
+    margin: ['responsive', 'first']
+  }
 }
