@@ -16,9 +16,9 @@ try {
 
   auth().setPersistence(auth.Auth.Persistence.NONE)
 } catch (error) {
-  const { message } = error
+  const { code } = error
 
-  if (!message.includes('app/duplicate-app')) {
+  if (code !== 'app/duplicate-app') {
     throw error
   }
 }
