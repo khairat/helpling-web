@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Router from 'next/router'
 import React, { useState } from 'react'
 
-import { Footer, FormMessage, Header, Spinner } from '../components'
+import { Footer, Header, Message, Spinner } from '../components'
 import { firebase, redirect } from '../lib'
 
 const SignIn: NextPage = () => {
@@ -23,7 +23,7 @@ const SignIn: NextPage = () => {
       <main className="items-center justify-center">
         <section className="bg-primary-dark rounded-lg p-8 w-signin">
           <h1 className="text-5xl font-semibold">Hello</h1>
-          {error && <FormMessage message={error} type="error" />}
+          {error && <Message message={error} type="error" />}
           {isNew && (
             <form
               className="mt-40"

@@ -6,7 +6,7 @@ interface Props {
   type: 'error' | 'message' | 'success'
 }
 
-export const FormMessage: FunctionComponent<Props> = ({ message, type }) => (
+export const Message: FunctionComponent<Props> = ({ message, type }) => (
   <div
     className={clsx(
       'rounded',
