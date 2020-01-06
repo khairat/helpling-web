@@ -47,7 +47,7 @@ const SignIn: NextPage = () => {
               <label>
                 <span>Pick a username</span>
                 <input
-                  className="bg-primary w-full"
+                  className="bg-primary"
                   onChange={event => setName(event.target.value)}
                   placeholder="Username"
                   required
@@ -59,7 +59,7 @@ const SignIn: NextPage = () => {
             </form>
           ) : (
             <button
-              className="mt-40 w-full"
+              className="mt-40"
               onClick={async () => {
                 setError('')
 
