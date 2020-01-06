@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useEffect } from 'react'
 
-import { Footer, Header } from '../components'
+import { Footer, Header, Hero } from '../components'
 import { auth, redirect } from '../lib'
 import { useUser } from '../store'
 
@@ -25,10 +25,12 @@ const Profile: NextPage<Props> = ({ loggedIn }) => {
 
       <Header loggedIn={loggedIn} />
 
-      <main className="items-center justify-center">
-        <h1 className="text-3xl font-semibold">
-          {user ? `Hello, ${user.displayName}` : 'Hello!'}
-        </h1>
+      <main className="justify-center">
+        <Hero>
+          <h1 className="text-3xl font-semibold">
+            {user ? `Hello, ${user.displayName}` : 'Hello!'}
+          </h1>
+        </Hero>
       </main>
 
       <Footer />
