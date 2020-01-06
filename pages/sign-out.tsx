@@ -1,11 +1,14 @@
+import axios from 'axios'
 import { NextPage } from 'next'
 
-import { firebase, redirect } from '../lib'
+import { redirect } from '../lib'
 
 const SignOut: NextPage = () => null
 
 SignOut.getInitialProps = async context => {
-  await firebase.auth().signOut()
+  await axios({
+    url: '/api/sign-out'
+  })
 
   redirect(context, '/')
 

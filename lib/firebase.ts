@@ -13,6 +13,8 @@ const json = JSON.parse(config)
 
 try {
   initializeApp(json)
+
+  auth().setPersistence(auth.Auth.Persistence.NONE)
 } catch (error) {
   const { message } = error
 

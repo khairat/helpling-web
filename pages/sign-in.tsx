@@ -5,12 +5,15 @@ import React, { useState } from 'react'
 
 import { Footer, Header, Message, Spinner } from '../components'
 import { firebase, redirect } from '../lib'
+import { useUser } from '../store'
 
 const SignIn: NextPage = () => {
   const [error, setError] = useState('')
   const [isNew, setIsNew] = useState(false)
   const [loading, setLoading] = useState(false)
   const [name, setName] = useState('')
+
+  const [, { signIn }] = useUser()
 
   return (
     <>
@@ -72,8 +75,15 @@ const SignIn: NextPage = () => {
                   const provider = new firebase.auth.GoogleAuthProvider()
 
                   const {
-                    additionalUserInfo
+                    additionalUserInfo,
+                    user
                   } = await firebase.auth().signInWithPopup(provider)
+
+                  const token = await user?.getIdToken()
+
+                  if (token) {
+                    await signIn(token)
+                  }
 
                   if (additionalUserInfo?.isNewUser) {
                     setIsNew(true)

@@ -1,17 +1,22 @@
 import { NextPage } from 'next'
+import cookies from 'next-cookies'
 import Head from 'next/head'
 import React from 'react'
 
 import { img_helpling } from '../assets'
 import { Footer, Header } from '../components'
 
-const Home: NextPage = () => (
+interface Props {
+  userId?: string
+}
+
+const Home: NextPage<Props> = ({ userId }) => (
   <>
     <Head>
       <title>Helpling</title>
     </Head>
 
-    <Header />
+    <Header loggedIn={!!userId} />
 
     <main className="justify-center">
       <section className="flex items-center justify-center flex-col my-8 px-8 py-32 relative">
@@ -51,5 +56,13 @@ const Home: NextPage = () => (
     `}</style>
   </>
 )
+
+Home.getInitialProps = context => {
+  const { userId } = cookies(context)
+
+  return {
+    userId
+  }
+}
 
 export default Home

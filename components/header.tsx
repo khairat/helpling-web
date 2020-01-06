@@ -1,24 +1,16 @@
 import clsx from 'clsx'
 import Link from 'next/link'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 
 import { img_helpling, img_menu_close, img_menu_open } from '../assets'
-import { firebase } from '../lib'
 import { NavLink } from './nav-link'
 
-export const Header: FunctionComponent = () => {
-  const [loggedIn, setLoggedIn] = useState(false)
+interface Props {
+  loggedIn?: boolean
+}
+
+export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
   const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-      setLoggedIn(!!user)
-    })
-
-    return () => {
-      unsubscribe()
-    }
-  }, [])
 
   return (
     <header className="flex items-stretch justify-between">
@@ -68,6 +60,7 @@ export const Header: FunctionComponent = () => {
         {loggedIn && (
           <>
             <NavLink href="/browse">Browse</NavLink>
+            <NavLink href="/requests">Requests</NavLink>
             <NavLink href="/profile">Profile</NavLink>
             <NavLink href="/sign-out">Sign out</NavLink>
           </>
