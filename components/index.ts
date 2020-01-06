@@ -1,5 +1,6 @@
 export { Footer } from './footer'
 export { Header } from './header'
+export { Hero } from './hero'
 export { Message } from './message'
 export { NavLink } from './nav-link'
 export { Spinner } from './spinner'

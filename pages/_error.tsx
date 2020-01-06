@@ -2,25 +2,29 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
 
-import { Footer, Header } from '../components'
+import { Footer, Header, Hero } from '../components'
+import { auth } from '../lib'
 
 interface Props {
-  code: number
+  loggedIn: boolean
+  notFound: boolean
 }
 
-const Error: NextPage<Props> = ({ code }) => (
+const Error: NextPage<Props> = ({ loggedIn, notFound }) => (
   <>
     <Head>
-      <title>{code || 'Error'} / Helpling</title>
+      <title>Error / Helpling</title>
     </Head>
 
-    <Header />
+    <Header loggedIn={loggedIn} />
 
-    <main className="items-center justify-center">
-      <section className="bg-primary-dark rounded-lg p-8 w-signin">
-        <h1 className="text-5xl font-semibold mb-8">{code || 'Error'}</h1>
+    <main className="justify-center">
+      <Hero>
+        <h1 className="text-5xl font-semibold mb-8">
+          {notFound ? 'Not found' : 'Error'}
+        </h1>
         <h3 className="text-3xl font-semibold">Holy moly!</h3>
-        {code === 404 ? (
+        {notFound ? (
           <>
             <p className="mt-4">
               We can&apos;t find what you were looking for.
@@ -36,7 +40,7 @@ const Error: NextPage<Props> = ({ code }) => (
             the doors.
           </p>
         )}
-      </section>
+      </Hero>
     </main>
 
     <Footer />
@@ -44,12 +48,11 @@ const Error: NextPage<Props> = ({ code }) => (
 )
 
 Error.getInitialProps = async context => {
-  const { err, res } = context
-
-  const code = res ? res.statusCode : err ? err.statusCode || 500 : 404
+  const loggedIn = auth.isLoggedIn(context)
 
   return {
-    code
+    loggedIn,
+    notFound: context.res?.statusCode === 404
   }
 }
 
