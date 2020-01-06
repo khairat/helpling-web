@@ -6,9 +6,14 @@ import React, { useEffect } from 'react'
 
 import { img_request_types } from '../assets'
 import { Footer, Header, Spinner } from '../components'
+import { auth } from '../lib'
 import { useRequests } from '../store'
 
-const Browse: NextPage = () => {
+interface Props {
+  loggedIn: boolean
+}
+
+const Browse: NextPage<Props> = ({ loggedIn }) => {
   const [{ loading, requests }, { fetch }] = useRequests()
 
   useEffect(() => {
@@ -21,7 +26,7 @@ const Browse: NextPage = () => {
         <title>Browse / Helpling</title>
       </Head>
 
-      <Header />
+      <Header loggedIn={loggedIn} />
 
       <main className="bg-primary-dark">
         <h1 className="text-5xl font-semibold mb-4">Browse</h1>
@@ -70,6 +75,14 @@ const Browse: NextPage = () => {
       <Footer />
     </>
   )
+}
+
+Browse.getInitialProps = context => {
+  const loggedIn = auth.isLoggedIn(context)
+
+  return {
+    loggedIn
+  }
 }
 
 export default Browse

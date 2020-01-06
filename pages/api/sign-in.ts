@@ -1,8 +1,7 @@
-const { FIREBASE_ADMIN_CONFIG, FIREBASE_DATABASE_URL } = process.env
-
-import * as admin from 'firebase-admin'
 import moment from 'moment'
 import { NextApiRequest, NextApiResponse } from 'next'
+
+import { firebase } from '../../lib/firebase-admin'
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const {
@@ -13,41 +12,25 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     throw new Error('Missing token')
   }
 
-  const config = Buffer.from(FIREBASE_ADMIN_CONFIG, 'base64').toString()
-
-  const json = JSON.parse(config)
-
-  try {
-    admin.initializeApp({
-      credential: admin.credential.cert(json),
-      databaseURL: FIREBASE_DATABASE_URL
-    })
-  } catch (error) {
-    const { code } = error
-
-    if (code !== 'app/duplicate-app') {
-      throw error
-    }
-  }
-
-  const { uid } = await admin.auth().verifyIdToken(token)
+  const { uid } = await firebase.auth().verifyIdToken(token)
 
   const expiresIn = 60 * 60 * 24 * 10 * 1000
+  const expiry = moment()
+    .add(expiresIn, 'milliseconds')
+    .toISOString()
 
-  const cookie = await admin.auth().createSessionCookie(token, {
+  const session = await firebase.auth().createSessionCookie(token, {
     expiresIn
   })
 
-  const cookies = [`session=${cookie}`, `userId=${uid}`]
+  const cookies = [`session=${session}`, `userId=${uid}`]
 
-  cookies.forEach(cookie =>
-    response.setHeader(
-      'set-cookie',
+  response.setHeader(
+    'set-cookie',
+    cookies.map(cookie =>
       [
         cookie,
-        `Expires=${moment()
-          .add(expiresIn, 'milliseconds')
-          .toISOString()}`,
+        `Expires=${expiry}`,
         'HttpOnly',
         'Path=/',
         process.env.NODE_ENV === 'production' && 'Secure'

@@ -1,15 +1,17 @@
 import clsx from 'clsx'
 import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/router'
-import React, { FunctionComponent } from 'react'
+import React, { AnchorHTMLAttributes, FunctionComponent } from 'react'
 
-export const NavLink: FunctionComponent<LinkProps> = ({ children, href }) => {
+export const NavLink: FunctionComponent<LinkProps &
+  AnchorHTMLAttributes<HTMLAnchorElement>> = ({ children, href, ...props }) => {
   const { asPath } = useRouter()
 
   return (
     <>
       <Link href={href}>
         <a
+          {...props}
           className={clsx(
             'flex',
             'font-semibold',

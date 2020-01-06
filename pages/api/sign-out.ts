@@ -2,18 +2,17 @@ import moment from 'moment'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
-  const cookies = [`session=null`, `userId=null`]
+  const cookies = [`token=`, `userId=`]
 
-  cookies.forEach(cookie =>
-    response.setHeader(
-      'set-cookie',
+  response.setHeader(
+    'set-cookie',
+    cookies.map(cookie =>
       [
         cookie,
         `Expires=${moment()
           .subtract(1, 'year')
           .toISOString()}`,
         'HttpOnly',
-        'MaxAge=0',
         'Path=/',
         process.env.NODE_ENV === 'production' && 'Secure'
       ]

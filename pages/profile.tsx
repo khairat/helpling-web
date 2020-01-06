@@ -1,26 +1,34 @@
-import { User } from 'firebase'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Footer, Header } from '../components'
-import { firebase, redirect } from '../lib'
+import { auth, redirect } from '../lib'
+import { useUser } from '../store'
 
 interface Props {
-  user: User | null
+  loggedIn: boolean
 }
 
-const Profile: NextPage<Props> = ({ user }) => {
+const Profile: NextPage<Props> = ({ loggedIn }) => {
+  const [{ user }, { init }] = useUser()
+
+  useEffect(() => {
+    init()
+  })
+
   return (
     <>
       <Head>
-        <title>{user?.displayName} / Helpling</title>
+        <title>{user?.displayName || 'Profile'} / Helpling</title>
       </Head>
 
-      <Header />
+      <Header loggedIn={loggedIn} />
 
       <main className="items-center justify-center">
-        <h1 className="text-3xl font-semibold">Hello, {user?.displayName}</h1>
+        <h1 className="text-3xl font-semibold">
+          {user ? `Hello, ${user.displayName}` : 'Hello!'}
+        </h1>
       </main>
 
       <Footer />
@@ -28,15 +36,15 @@ const Profile: NextPage<Props> = ({ user }) => {
   )
 }
 
-Profile.getInitialProps = context => {
-  const user = firebase.auth().currentUser
+Profile.getInitialProps = async context => {
+  const loggedIn = auth.isLoggedIn(context)
 
-  if (!user) {
-    redirect(context, '/')
+  if (!loggedIn) {
+    redirect(context, '/sign-in')
   }
 
   return {
-    user
+    loggedIn
   }
 }
 

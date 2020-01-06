@@ -1,8 +1,10 @@
 import clsx from 'clsx'
 import Link from 'next/link'
+import Router from 'next/router'
 import React, { FunctionComponent, useState } from 'react'
 
 import { img_helpling, img_menu_close, img_menu_open } from '../assets'
+import { useUser } from '../store'
 import { NavLink } from './nav-link'
 
 interface Props {
@@ -11,6 +13,8 @@ interface Props {
 
 export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
   const [visible, setVisible] = useState(false)
+
+  const [, { signOut }] = useUser()
 
   return (
     <header className="flex items-stretch justify-between">
@@ -62,15 +66,23 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
             <NavLink href="/browse">Browse</NavLink>
             <NavLink href="/requests">Requests</NavLink>
             <NavLink href="/profile">Profile</NavLink>
-            <NavLink href="/sign-out">Sign out</NavLink>
+            <NavLink
+              href="/sign-out"
+              onClick={async event => {
+                event.preventDefault()
+
+                await signOut()
+
+                Router.push('/')
+              }}>
+              Sign out
+            </NavLink>
           </>
         )}
         {!loggedIn && (
           <>
             <NavLink href="/browse">Browse</NavLink>
-            <NavLink href="/sign-in" prefetch={false}>
-              Sign in
-            </NavLink>
+            <NavLink href="/sign-in">Sign in</NavLink>
           </>
         )}
       </nav>

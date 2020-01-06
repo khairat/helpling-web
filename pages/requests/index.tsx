@@ -6,17 +6,19 @@ import React, { useEffect } from 'react'
 
 import { img_request_types } from '../../assets'
 import { Footer, Header, Spinner } from '../../components'
-import { firebase } from '../../lib'
+import { auth, redirect } from '../../lib'
 import { useUser } from '../../store'
 
-const Requests: NextPage = () => {
+interface Props {
+  userId?: string
+}
+
+const Requests: NextPage<Props> = ({ userId }) => {
   const [{ fetching, requests }, { fetchRequests }] = useUser()
 
   useEffect(() => {
-    const { currentUser } = firebase.auth()
-
-    if (currentUser) {
-      fetchRequests(currentUser.uid)
+    if (userId) {
+      fetchRequests(userId)
     }
   }, [])
 
@@ -26,7 +28,7 @@ const Requests: NextPage = () => {
         <title>Requests / Helpling</title>
       </Head>
 
-      <Header />
+      <Header loggedIn={!!userId} />
 
       <main className="bg-primary-dark">
         <header className="flex items-center justify-between mb-4">
@@ -90,6 +92,19 @@ const Requests: NextPage = () => {
       <Footer />
     </>
   )
+}
+
+Requests.getInitialProps = async context => {
+  const loggedIn = auth.isLoggedIn(context)
+  const userId = auth.getUserId(context)
+
+  if (!loggedIn) {
+    redirect(context, '/sign-in')
+  }
+
+  return {
+    userId
+  }
 }
 
 export default Requests

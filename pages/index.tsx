@@ -1,22 +1,22 @@
 import { NextPage } from 'next'
-import cookies from 'next-cookies'
 import Head from 'next/head'
 import React from 'react'
 
 import { img_helpling } from '../assets'
 import { Footer, Header } from '../components'
+import { auth } from '../lib'
 
 interface Props {
-  userId?: string
+  loggedIn: boolean
 }
 
-const Home: NextPage<Props> = ({ userId }) => (
+const Home: NextPage<Props> = ({ loggedIn }) => (
   <>
     <Head>
       <title>Helpling</title>
     </Head>
 
-    <Header loggedIn={!!userId} />
+    <Header loggedIn={loggedIn} />
 
     <main className="justify-center">
       <section className="flex items-center justify-center flex-col my-8 px-8 py-32 relative">
@@ -58,10 +58,10 @@ const Home: NextPage<Props> = ({ userId }) => (
 )
 
 Home.getInitialProps = context => {
-  const { userId } = cookies(context)
+  const loggedIn = auth.isLoggedIn(context)
 
   return {
-    userId
+    loggedIn
   }
 }
 

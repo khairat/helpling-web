@@ -4,16 +4,15 @@ import Router from 'next/router'
 import React, { useState } from 'react'
 
 import { Footer, Header, Message, Spinner } from '../components'
-import { firebase, redirect } from '../lib'
+import { auth, redirect } from '../lib'
 import { useUser } from '../store'
 
 const SignIn: NextPage = () => {
   const [error, setError] = useState('')
   const [isNew, setIsNew] = useState(false)
-  const [loading, setLoading] = useState(false)
   const [name, setName] = useState('')
 
-  const [, { signIn }] = useUser()
+  const [{ loading }, { signIn, updateName }] = useUser()
 
   return (
     <>
@@ -27,7 +26,7 @@ const SignIn: NextPage = () => {
         <section className="bg-primary-dark rounded-lg p-8 w-signin">
           <h1 className="text-5xl font-semibold">Hello</h1>
           {error && <Message message={error} type="error" />}
-          {isNew && (
+          {isNew ? (
             <form
               className="mt-40"
               onSubmit={async event => {
@@ -35,18 +34,13 @@ const SignIn: NextPage = () => {
 
                 if (name) {
                   setError('')
-                  setLoading(true)
 
                   try {
-                    await firebase.auth().currentUser?.updateProfile({
-                      displayName: name
-                    })
+                    await updateName(name)
 
                     Router.replace('/')
                   } catch ({ message }) {
                     setError(message)
-                  } finally {
-                    setLoading(false)
                   }
                 }
               }}>
@@ -63,37 +57,22 @@ const SignIn: NextPage = () => {
               </label>
               <button>{loading ? <Spinner /> : 'Sign up'}</button>
             </form>
-          )}
-          {!isNew && (
+          ) : (
             <button
               className="mt-40 w-full"
               onClick={async () => {
                 setError('')
-                setLoading(true)
 
                 try {
-                  const provider = new firebase.auth.GoogleAuthProvider()
+                  const isNew = await signIn()
 
-                  const {
-                    additionalUserInfo,
-                    user
-                  } = await firebase.auth().signInWithPopup(provider)
-
-                  const token = await user?.getIdToken()
-
-                  if (token) {
-                    await signIn(token)
-                  }
-
-                  if (additionalUserInfo?.isNewUser) {
+                  if (isNew) {
                     setIsNew(true)
                   } else {
                     Router.replace('/')
                   }
                 } catch ({ message }) {
                   setError(message)
-                } finally {
-                  setLoading(false)
                 }
               }}>
               {loading ? <Spinner /> : 'Sign in with Google'}
@@ -108,14 +87,14 @@ const SignIn: NextPage = () => {
 }
 
 SignIn.getInitialProps = context => {
-  const user = firebase.auth().currentUser
+  const loggedIn = auth.isLoggedIn(context)
 
-  if (user) {
+  if (loggedIn) {
     redirect(context, '/')
   }
 
   return {
-    user
+    loggedIn
   }
 }
 
