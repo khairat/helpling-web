@@ -7,29 +7,36 @@ import { auth, redirect } from '../lib'
 import { useUser } from '../store'
 
 interface Props {
-  loggedIn: boolean
+  userId?: string
 }
 
-const Profile: NextPage<Props> = ({ loggedIn }) => {
-  const [{ user }, { init }] = useUser()
+const Profile: NextPage<Props> = ({ userId }) => {
+  const [{ user }, { fetch }] = useUser()
 
   useEffect(() => {
-    init()
-  })
+    if (userId) {
+      fetch(userId)
+    }
+  }, [])
 
   return (
     <>
       <Head>
-        <title>{user?.displayName || 'Profile'} / Helpling</title>
+        <title>{user?.name || 'Profile'} / Helpling</title>
       </Head>
 
-      <Header loggedIn={loggedIn} />
+      <Header loggedIn={!!userId} />
 
       <main className="justify-center">
         <Hero>
-          <h1 className="text-3xl font-semibold">
-            {user ? `Hello, ${user.displayName}` : 'Hello!'}
+          <h1 className="text-4xl font-semibold">
+            {user ? `Hello, ${user.name}` : 'Hello!'}
           </h1>
+          {user && (
+            <h2 className="mt-4 text-2xl font-medium">
+              From {user.city}, {user.country}
+            </h2>
+          )}
         </Hero>
       </main>
 
@@ -40,13 +47,14 @@ const Profile: NextPage<Props> = ({ loggedIn }) => {
 
 Profile.getInitialProps = async context => {
   const loggedIn = auth.isLoggedIn(context)
+  const userId = auth.getUserId(context)
 
   if (!loggedIn) {
     redirect(context, '/sign-in')
   }
 
   return {
-    loggedIn
+    userId
   }
 }
 

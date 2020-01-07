@@ -15,3 +15,12 @@ export interface Request {
   createdAt: firestore.Timestamp
   updatedAt: firestore.Timestamp
 }
+
+export interface User {
+  id: string
+  city: string
+  country: string
+  name: string
+  payPalEmail?: string
+  createdAt: firestore.Timestamp
+}

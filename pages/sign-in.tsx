@@ -4,15 +4,18 @@ import Router from 'next/router'
 import React, { useState } from 'react'
 
 import { Footer, Header, Message, Spinner } from '../components'
-import { auth, redirect } from '../lib'
+import { auth, places, redirect } from '../lib'
 import { useUser } from '../store'
 
 const SignIn: NextPage = () => {
   const [error, setError] = useState('')
   const [isNew, setIsNew] = useState(false)
+
+  const [city, setCity] = useState('')
+  const [country, setCountry] = useState('')
   const [name, setName] = useState('')
 
-  const [{ loading }, { signIn, updateName }] = useUser()
+  const [{ loading }, { signIn, updateProfile }] = useUser()
 
   return (
     <>
@@ -32,11 +35,15 @@ const SignIn: NextPage = () => {
               onSubmit={async event => {
                 event.preventDefault()
 
-                if (name) {
+                if (name && city && country) {
                   setError('')
 
                   try {
-                    await updateName(name)
+                    await updateProfile({
+                      city,
+                      country,
+                      name
+                    })
 
                     Router.replace('/')
                   } catch ({ message }) {
@@ -55,6 +62,37 @@ const SignIn: NextPage = () => {
                   value={name}
                 />
               </label>
+              <label>
+                <span>Where are you from?</span>
+                <select
+                  className="bg-primary"
+                  onChange={event => setCountry(event.target.value)}
+                  placeholder="Country"
+                  required
+                  value={country}>
+                  {places.countries().map((country, index) => (
+                    <option key={index} value={country}>
+                      {country}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {country && (
+                <label>
+                  <select
+                    className="bg-primary"
+                    onChange={event => setCity(event.target.value)}
+                    placeholder="Country"
+                    required
+                    value={city}>
+                    {places.cities(country).map((city, index) => (
+                      <option key={index} value={city}>
+                        {city}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              )}
               <button>{loading ? <Spinner /> : 'Sign up'}</button>
             </form>
           ) : (

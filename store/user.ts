@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { User } from 'firebase'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
 import { firebase } from '../lib'
-import { Request } from './types'
+import { Request, User } from './types'
 
 interface State {
   fetching: boolean
@@ -17,20 +16,40 @@ const initialState = {
   fetching: false,
   loading: false,
   requests: [],
-  user: firebase.auth().currentUser
+  user: null
 }
 
 const actions = {
-  fetchRequests: (userId: string) => ({ setState }: StoreApi) => {
+  fetch: (userId: string) => ({ setState }: StoreApi) => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(userId)
+      .onSnapshot(user => {
+        const data = user.data()
+
+        if (data) {
+          setState({
+            user: data as User
+          })
+        }
+      })
+  },
+  fetchRequests: (userId: string) => async ({ setState }: StoreApi) => {
     setState({
       fetching: true
     })
 
+    const user = firebase
+      .firestore()
+      .collection('users')
+      .doc(userId)
+
     firebase
       .firestore()
       .collection('requests')
-      .where('userId', '==', userId)
-      .orderBy('updatedAt')
+      .where('user', '==', user)
+      .orderBy('updatedAt', 'desc')
       .onSnapshot(({ docs }) => {
         const requests = docs.map(doc => ({
           id: doc.id,
@@ -43,49 +62,59 @@ const actions = {
         })
       })
   },
-  init: () => ({ setState }: StoreApi) => {
-    firebase.auth().onAuthStateChanged(user =>
-      setState({
-        user
-      })
-    )
-  },
-  signIn: (token?: string) => async ({ dispatch, setState }: StoreApi) => {
+  signIn: (token?: string, isNew?: boolean) => async ({
+    dispatch,
+    setState
+  }: StoreApi) => {
     setState({
       loading: true
     })
 
-    if (token) {
-      await axios({
-        data: {
-          token
-        },
-        method: 'post',
-        url: '/api/sign-in'
-      })
-
-      setState({
-        loading: false
-      })
-    } else {
-      const provider = new firebase.auth.GoogleAuthProvider()
-
-      const {
-        additionalUserInfo,
-        user
-      } = await firebase.auth().signInWithPopup(provider)
-
-      const token = await user?.getIdToken()
-
+    try {
       if (token) {
-        await dispatch(actions.signIn(token))
-      }
+        await axios({
+          data: {
+            isNew,
+            token
+          },
+          method: 'post',
+          url: '/api/sign-in'
+        })
+      } else {
+        const provider = new firebase.auth.GoogleAuthProvider()
 
+        const {
+          additionalUserInfo,
+          user
+        } = await firebase.auth().signInWithPopup(provider)
+
+        const isNew = additionalUserInfo?.isNewUser
+
+        const token = await user?.getIdToken()
+
+        if (token) {
+          await dispatch(actions.signIn(token, isNew))
+        }
+
+        if (isNew) {
+          await firebase
+            .firestore()
+            .collection('users')
+            .doc(user?.uid)
+            .set({
+              createdAt: new Date(),
+              email: user?.email,
+              id: user?.uid,
+              name: user?.displayName
+            })
+        }
+
+        return isNew
+      }
+    } finally {
       setState({
         loading: false
       })
-
-      return additionalUserInfo?.isNewUser
     }
   },
   signOut: () => async ({ setState }: StoreApi) => {
@@ -97,18 +126,26 @@ const actions = {
 
     setState(initialState)
   },
-  updateName: (name: string) => async ({ setState }: StoreApi) => {
-    setState({
-      loading: true
-    })
+  updateProfile: (data: Partial<User>) => async ({ setState }: StoreApi) => {
+    const userId = firebase.auth().currentUser?.uid
 
-    await firebase.auth().currentUser?.updateProfile({
-      displayName: name
-    })
+    if (userId) {
+      setState({
+        loading: true
+      })
 
-    setState({
-      loading: false
-    })
+      try {
+        await firebase
+          .firestore()
+          .collection('users')
+          .doc(userId)
+          .update(data)
+      } finally {
+        setState({
+          loading: false
+        })
+      }
+    }
   }
 }
 

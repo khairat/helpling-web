@@ -60,12 +60,11 @@ const Requests: NextPage<Props> = ({ userId }) => {
               <tr>
                 <th>Request</th>
                 <th>Type</th>
-                <th>Person</th>
                 <th>Posted</th>
               </tr>
             </thead>
             <tbody>
-              {requests.map(({ createdAt, description, type, user }, index) => (
+              {requests.map(({ createdAt, description, type }, index) => (
                 <tr key={index}>
                   <td>{description}</td>
                   <td>
@@ -75,11 +74,6 @@ const Requests: NextPage<Props> = ({ userId }) => {
                       src={img_request_types[type]}
                       title={type}
                     />
-                  </td>
-                  <td>
-                    <Link href={`/people/${user.id}`}>
-                      <a>{user.name}</a>
-                    </Link>
                   </td>
                   <td>{moment(createdAt.toDate()).fromNow()}</td>
                 </tr>

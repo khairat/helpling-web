@@ -63,8 +63,9 @@ button {
 }
 
 input,
-textarea {
-  @apply bg-primary-dark p-4 rounded outline-none w-full;
+textarea,
+select {
+  @apply appearance-none bg-primary-dark p-4 rounded outline-none w-full;
 }
 
 label {
@@ -77,6 +78,10 @@ label {
   textarea {
     min-height: 10em;
   }
+}
+
+select {
+  background: url('/img/expand.svg') calc(100% - 1em) center / 1.5em no-repeat;
 }
 
 textarea {
