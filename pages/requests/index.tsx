@@ -30,8 +30,8 @@ const Requests: NextPage<Props> = ({ userId }) => {
 
       <Header loggedIn={!!userId} />
 
-      <main className="bg-primary-dark">
-        <header className="flex items-center justify-between mb-4">
+      <main className="main">
+        <header className="flex items-center justify-between mb-8">
           <h1 className="text-5xl font-semibold">Requests</h1>
           <nav>
             <Link href="/requests/new">

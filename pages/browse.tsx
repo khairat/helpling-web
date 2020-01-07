@@ -28,8 +28,8 @@ const Browse: NextPage<Props> = ({ loggedIn }) => {
 
       <Header loggedIn={loggedIn} />
 
-      <main className="bg-primary-dark">
-        <h1 className="text-5xl font-semibold mb-4">Browse</h1>
+      <main className="main">
+        <h1 className="text-5xl font-semibold mb-8">Browse</h1>
         {loading && <Spinner className="mt-4" />}
         {!loading && requests.length === 0 && (
           <p>

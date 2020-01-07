@@ -122,6 +122,26 @@ table {
 
   main {
     @apply flex flex-col flex-1 p-8;
+
+    &.main {
+      position: relative;
+
+      &:before {
+        @apply bg-primary-dark;
+
+        bottom: 0;
+        content: '';
+        display: block;
+        height: 100%;
+        left: -2em;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: skew(-1deg, 0.5deg);
+        width: calc(100% + 4em);
+        z-index: -1;
+      }
+    }
   }
 }
 
