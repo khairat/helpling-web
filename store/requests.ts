@@ -18,7 +18,7 @@ const actions = {
     firebase
       .firestore()
       .collection('requests')
-      .orderBy('updatedAt')
+      .orderBy('updatedAt', 'desc')
       .onSnapshot(({ docs }) => {
         const requests = docs.map(doc => ({
           id: doc.id,
