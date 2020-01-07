@@ -127,6 +127,7 @@ table {
 
     &.main {
       position: relative;
+      overflow: hidden;
 
       &:before {
         @apply bg-primary-dark;
