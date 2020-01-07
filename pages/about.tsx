@@ -57,6 +57,19 @@ const About: NextPage<Props> = ({ loggedIn }) => (
           make the world a better place.
         </p>
       </Hero>
+      <Hero>
+        <h1 className="text-5xl font-semibold text-secondary">Tech</h1>
+        <p className="text-center mt-4 text-xl">
+          Helpling is built with open-source technology and the source code is
+          publicly available on&nbsp;
+          <a href="https://github.com/helplingapp">GitHub</a>.
+        </p>
+        <p className="text-center mt-4 text-xl">
+          It&apos;s built with <a href="https://nextjs.org/">Next.js</a>,&nbsp;
+          <a href="https://www.typescriptlang.org/">TypeScript</a>, and&nbsp;
+          <a href="https://firebase.google.com/">Firebase</a>.
+        </p>
+      </Hero>
     </main>
 
     <Footer />
