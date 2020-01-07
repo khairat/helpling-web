@@ -33,7 +33,7 @@ const Profile: NextPage<Props> = ({ userId }) => {
             <Spinner />
           ) : (
             <>
-              <h1 className="text-4xl font-semibold">
+              <h1 className="text-4xl font-semibold text-secondary">
                 {user ? `Hello, ${user.name}` : 'Hello!'}
               </h1>
               {user && (

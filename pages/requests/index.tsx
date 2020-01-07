@@ -33,7 +33,9 @@ const Requests: NextPage<Props> = ({ userId }) => {
 
       <main className="main">
         <header className="flex items-center justify-between mb-8">
-          <h1 className="text-5xl font-semibold">Your requests</h1>
+          <h1 className="text-5xl font-semibold text-secondary">
+            Your requests
+          </h1>
           <nav>
             <Link href="/requests/new">
               <a className="bg-accent px-3 py-2 text-white skewed">New</a>

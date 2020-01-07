@@ -29,11 +29,12 @@ export const Footer: FunctionComponent = () => {
           <Link key={index} href={link}>
             <a
               className={clsx(
-                'mt-4',
                 'first:mt-0',
-                'hover:text-accent',
+                'hover:text-secondary',
+                'mt-4',
+                'text-gray-400',
 
-                asPath.indexOf(link) === 0 && 'text-accent font-medium'
+                asPath.indexOf(link) === 0 && 'text-secondary font-medium'
               )}>
               {label}
             </a>

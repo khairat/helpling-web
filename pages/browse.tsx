@@ -30,7 +30,7 @@ const Browse: NextPage<Props> = ({ userId }) => {
       <Header loggedIn={!!userId} />
 
       <main className="main">
-        <h1 className="text-5xl font-semibold mb-8">Browse</h1>
+        <h1 className="text-5xl font-semibold mb-8 text-secondary">Browse</h1>
         {loading && <Spinner className="mt-4" />}
         {!loading && requests.length === 0 && (
           <p>
