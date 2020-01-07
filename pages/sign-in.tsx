@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Router from 'next/router'
 import React, { useState } from 'react'
 
-import { Footer, Header, Message, Spinner } from '../components'
+import { Footer, Header, Hero, Message, Spinner } from '../components'
 import { auth, places, redirect } from '../lib'
 import { useUser } from '../store'
 
@@ -11,8 +11,8 @@ const SignIn: NextPage = () => {
   const [error, setError] = useState('')
   const [isNew, setIsNew] = useState(false)
 
-  const [city, setCity] = useState('')
-  const [country, setCountry] = useState('')
+  const [city, setCity] = useState()
+  const [country, setCountry] = useState()
   const [name, setName] = useState('')
 
   const [{ loading }, { signIn, updateProfile }] = useUser()
@@ -25,13 +25,13 @@ const SignIn: NextPage = () => {
 
       <Header />
 
-      <main className="items-center justify-center">
-        <section className="bg-primary-dark rounded-lg p-8 w-signin">
+      <main className="justify-center">
+        <Hero>
           <h1 className="text-5xl font-semibold">Hello</h1>
           {error && <Message message={error} type="error" />}
           {isNew ? (
             <form
-              className="mt-40"
+              className="mt-8"
               onSubmit={async event => {
                 event.preventDefault()
 
@@ -66,7 +66,10 @@ const SignIn: NextPage = () => {
                 <span>Where are you from?</span>
                 <select
                   className="bg-primary"
-                  onChange={event => setCountry(event.target.value)}
+                  onChange={event => {
+                    setCountry(event.target.value)
+                    setCity(undefined)
+                  }}
                   placeholder="Country"
                   required
                   value={country}>
@@ -93,7 +96,9 @@ const SignIn: NextPage = () => {
                   </select>
                 </label>
               )}
-              <button>{loading ? <Spinner /> : 'Sign up'}</button>
+              <button className="mt-12">
+                {loading ? <Spinner /> : 'Sign up'}
+              </button>
             </form>
           ) : (
             <button
@@ -116,7 +121,7 @@ const SignIn: NextPage = () => {
               {loading ? <Spinner /> : 'Sign in with Google'}
             </button>
           )}
-        </section>
+        </Hero>
       </main>
 
       <Footer />
