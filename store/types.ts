@@ -6,12 +6,7 @@ export interface Request {
   id: string
   description: string
   type: RequestType
-  user: {
-    id: string
-    name: string
-    city: string
-    country: string
-  }
+  user: firestore.DocumentReference<User>
   createdAt: firestore.Timestamp
   updatedAt: firestore.Timestamp
 }
