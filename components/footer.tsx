@@ -1,7 +1,11 @@
+import clsx from 'clsx'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { FunctionComponent } from 'react'
 
 export const Footer: FunctionComponent = () => {
+  const { asPath } = useRouter()
+
   const links = [
     {
       label: 'Browse',
@@ -16,13 +20,22 @@ export const Footer: FunctionComponent = () => {
       link: '/privacy'
     }
   ]
+
   return (
     <footer className="m-8 text-gray-600 text-sm leading-none flex">
       <p className="m-0">&copy; {new Date().getFullYear()} / Helpling</p>
       <nav className="flex flex-col ml-8">
         {links.map(({ label, link }, index) => (
           <Link key={index} href={link}>
-            <a className="text-gray-500 mt-4 first:mt-0 hover:text-accent">
+            <a
+              className={clsx(
+                'text-gray-500',
+                'mt-4',
+                'first:mt-0',
+                'hover:text-accent',
+
+                asPath.indexOf(link) === 0 && 'text-accent font-medium'
+              )}>
               {label}
             </a>
           </Link>
