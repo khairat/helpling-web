@@ -21,8 +21,8 @@ const Home: NextPage<Props> = ({ loggedIn }) => (
     <main className="justify-center">
       <Hero>
         <img className="h-40" src={img_helpling} alt="Helpling" />
-        <h1 className="text-3xl font-semibold text-center my-4">Helpling</h1>
-        <p className="text-center">
+        <h1 className="text-5xl font-semibold my-4">Helpling</h1>
+        <p className="text-center text-xl">
           Find people who need your help and help them.
         </p>
       </Hero>
