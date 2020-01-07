@@ -10,7 +10,7 @@ interface State {
 type StoreApi = StoreActionApi<State>
 
 const actions = {
-  fetch: () => ({ setState }: StoreApi) => {
+  fetch: (userId?: string) => ({ setState }: StoreApi) => {
     setState({
       loading: true
     })
@@ -18,12 +18,17 @@ const actions = {
     firebase
       .firestore()
       .collection('requests')
+      .where('status', '==', 'pending')
       .orderBy('updatedAt', 'desc')
       .onSnapshot(({ docs }) => {
-        const requests = docs.map(doc => ({
+        let requests = docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         })) as Request[]
+
+        if (userId) {
+          requests = requests.filter(({ user }) => user.id !== userId)
+        }
 
         setState({
           loading: false,

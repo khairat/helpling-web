@@ -1,10 +1,12 @@
 import { firestore } from 'firebase'
 
 export type RequestType = 'food' | 'invite' | 'money' | 'physical'
+export type RequestStatus = 'new' | 'complete'
 
 export interface Request {
   id: string
   description: string
+  status: RequestStatus
   type: RequestType
   user: firestore.DocumentReference<User>
   createdAt: firestore.Timestamp

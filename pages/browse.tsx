@@ -1,3 +1,4 @@
+import { startCase } from 'lodash'
 import moment from 'moment'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -10,14 +11,14 @@ import { auth } from '../lib'
 import { useRequests } from '../store'
 
 interface Props {
-  loggedIn: boolean
+  userId?: string
 }
 
-const Browse: NextPage<Props> = ({ loggedIn }) => {
+const Browse: NextPage<Props> = ({ userId }) => {
   const [{ loading, requests }, { fetch }] = useRequests()
 
   useEffect(() => {
-    fetch()
+    fetch(userId)
   }, [])
 
   return (
@@ -26,7 +27,7 @@ const Browse: NextPage<Props> = ({ loggedIn }) => {
         <title>Browse / Helpling</title>
       </Head>
 
-      <Header loggedIn={loggedIn} />
+      <Header loggedIn={!!userId} />
 
       <main className="main">
         <h1 className="text-5xl font-semibold mb-8">Browse</h1>
@@ -42,29 +43,33 @@ const Browse: NextPage<Props> = ({ loggedIn }) => {
             <thead>
               <tr>
                 <th>Request</th>
-                <th>Type</th>
+                <th className="text-center">Type</th>
+                <th>Status</th>
                 <th>Posted</th>
               </tr>
             </thead>
             <tbody>
-              {requests.map(({ createdAt, description, id, type }, index) => (
-                <tr key={index}>
-                  <td>
-                    <Link href={`/requests/${id}`}>
-                      <a>{description}</a>
-                    </Link>
-                  </td>
-                  <td>
-                    <img
-                      alt={type}
-                      className="h-6 w-6"
-                      src={img_request_types[type]}
-                      title={type}
-                    />
-                  </td>
-                  <td>{moment(createdAt.toDate()).fromNow()}</td>
-                </tr>
-              ))}
+              {requests.map(
+                ({ createdAt, description, id, status, type }, index) => (
+                  <tr key={index}>
+                    <td>
+                      <Link href={`/requests/${id}`}>
+                        <a>{description}</a>
+                      </Link>
+                    </td>
+                    <td>
+                      <img
+                        alt={type}
+                        className="h-8 w-8 m-auto"
+                        src={img_request_types[type]}
+                        title={type}
+                      />
+                    </td>
+                    <td>{startCase(status)}</td>
+                    <td>{moment(createdAt.toDate()).fromNow()}</td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         )}
@@ -76,10 +81,10 @@ const Browse: NextPage<Props> = ({ loggedIn }) => {
 }
 
 Browse.getInitialProps = context => {
-  const loggedIn = auth.isLoggedIn(context)
+  const userId = auth.getUserId(context)
 
   return {
-    loggedIn
+    userId
   }
 }
 

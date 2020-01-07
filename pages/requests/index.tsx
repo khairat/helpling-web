@@ -1,3 +1,4 @@
+import { startCase } from 'lodash'
 import moment from 'moment'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -25,14 +26,14 @@ const Requests: NextPage<Props> = ({ userId }) => {
   return (
     <>
       <Head>
-        <title>Requests / Helpling</title>
+        <title>Your requests / Helpling</title>
       </Head>
 
       <Header loggedIn={!!userId} />
 
       <main className="main">
         <header className="flex items-center justify-between mb-8">
-          <h1 className="text-5xl font-semibold">Requests</h1>
+          <h1 className="text-5xl font-semibold">Your requests</h1>
           <nav>
             <Link href="/requests/new">
               <a className="bg-accent px-3 py-2 text-white rounded">New</a>
@@ -59,25 +60,33 @@ const Requests: NextPage<Props> = ({ userId }) => {
             <thead>
               <tr>
                 <th>Request</th>
-                <th>Type</th>
+                <th className="text-center">Type</th>
+                <th>Status</th>
                 <th>Posted</th>
               </tr>
             </thead>
             <tbody>
-              {requests.map(({ createdAt, description, type }, index) => (
-                <tr key={index}>
-                  <td>{description}</td>
-                  <td>
-                    <img
-                      alt={type}
-                      className="h-6 w-6"
-                      src={img_request_types[type]}
-                      title={type}
-                    />
-                  </td>
-                  <td>{moment(createdAt.toDate()).fromNow()}</td>
-                </tr>
-              ))}
+              {requests.map(
+                ({ createdAt, description, id, status, type }, index) => (
+                  <tr key={index}>
+                    <td>
+                      <Link href={`/requests/${id}`}>
+                        <a>{description}</a>
+                      </Link>
+                    </td>
+                    <td>
+                      <img
+                        alt={type}
+                        className="h-8 w-8 m-auto"
+                        src={img_request_types[type]}
+                        title={type}
+                      />
+                    </td>
+                    <td>{startCase(status)}</td>
+                    <td>{moment(createdAt.toDate()).fromNow()}</td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         )}
