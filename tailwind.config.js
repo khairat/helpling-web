@@ -5,7 +5,8 @@ module.exports = {
         accent: '#fe6458',
         modal: 'rgba(0, 0, 0, 0.85)',
         primary: '#1a273e',
-        'primary-dark': '#010f28'
+        'primary-dark': '#010f28',
+        secondary: '#ea5167'
       },
       fontFamily: {
         sans: [

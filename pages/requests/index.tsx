@@ -36,7 +36,7 @@ const Requests: NextPage<Props> = ({ userId }) => {
           <h1 className="text-5xl font-semibold">Your requests</h1>
           <nav>
             <Link href="/requests/new">
-              <a className="bg-accent px-3 py-2 text-white rounded">New</a>
+              <a className="bg-accent px-3 py-2 text-white skewed">New</a>
             </Link>
           </nav>
         </header>
