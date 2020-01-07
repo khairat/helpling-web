@@ -57,7 +57,7 @@ const Browse: NextPage<Props> = ({ loggedIn }) => {
                   <td>
                     <img
                       alt={type}
-                      className="h-8 w-8"
+                      className="h-6 w-6"
                       src={img_request_types[type]}
                       title={type}
                     />
