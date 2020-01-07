@@ -19,9 +19,20 @@ const initialState = {
   user: null
 }
 
+let unsubscribeFetch: () => void
+let unsubscribeFetchRequests: () => void
+
 const actions = {
   fetch: (userId: string) => ({ setState }: StoreApi) => {
-    firebase
+    if (unsubscribeFetch !== undefined) {
+      return
+    }
+
+    setState({
+      loading: true
+    })
+
+    unsubscribeFetch = firebase
       .firestore()
       .collection('users')
       .doc(userId)
@@ -33,9 +44,17 @@ const actions = {
             user: data as User
           })
         }
+
+        setState({
+          loading: false
+        })
       })
   },
   fetchRequests: (userId: string) => async ({ setState }: StoreApi) => {
+    if (unsubscribeFetchRequests !== undefined) {
+      return
+    }
+
     setState({
       fetching: true
     })
@@ -45,7 +64,7 @@ const actions = {
       .collection('users')
       .doc(userId)
 
-    firebase
+    unsubscribeFetchRequests = firebase
       .firestore()
       .collection('requests')
       .where('user', '==', user)

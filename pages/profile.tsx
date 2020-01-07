@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useEffect } from 'react'
 
-import { Footer, Header, Hero } from '../components'
+import { Footer, Header, Hero, Spinner } from '../components'
 import { auth, redirect } from '../lib'
 import { useUser } from '../store'
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Profile: NextPage<Props> = ({ userId }) => {
-  const [{ user }, { fetch }] = useUser()
+  const [{ loading, user }, { fetch }] = useUser()
 
   useEffect(() => {
     if (userId) {
@@ -29,13 +29,19 @@ const Profile: NextPage<Props> = ({ userId }) => {
 
       <main className="justify-center">
         <Hero>
-          <h1 className="text-4xl font-semibold">
-            {user ? `Hello, ${user.name}` : 'Hello!'}
-          </h1>
-          {user && (
-            <h2 className="mt-4 text-2xl font-medium">
-              From {user.city}, {user.country}
-            </h2>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <h1 className="text-4xl font-semibold">
+                {user ? `Hello, ${user.name}` : 'Hello!'}
+              </h1>
+              {user && (
+                <h2 className="mt-4 text-2xl font-medium">
+                  From {user.city}, {user.country}
+                </h2>
+              )}
+            </>
           )}
         </Hero>
       </main>
