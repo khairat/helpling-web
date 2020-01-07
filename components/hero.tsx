@@ -36,11 +36,11 @@ export const Hero: FunctionComponent<HTMLAttributes<HTMLDivElement>> = ({
       }
 
       section:nth-child(odd):before {
-        clip-path: polygon(0 5em, 100% 0, 100% calc(100% - 5em), 0 100%);
+        clip-path: polygon(0 3em, 100% 0, 100% calc(100% - 3em), 0 100%);
       }
 
       section:nth-child(even):before {
-        clip-path: polygon(0 0, 100% 5em, 100% 100%, 0 calc(100% - 5em));
+        clip-path: polygon(0 0, 100% 3em, 100% 100%, 0 calc(100% - 3em));
       }
     `}</style>
   </>
