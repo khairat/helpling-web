@@ -19,7 +19,9 @@ const About: NextPage<Props> = ({ loggedIn }) => (
 
     <main className="justify-center">
       <Hero>
-        <h1 className="text-5xl font-semibold text-accent">About Helpling</h1>
+        <h1 className="text-5xl font-semibold text-accent text-center">
+          About Helpling
+        </h1>
         <p className="text-center mt-4 text-xl">
           Helpling is a place to help you find people who are less fortunate or
           in dire circumstanes and see how you can help out.
@@ -35,7 +37,9 @@ const About: NextPage<Props> = ({ loggedIn }) => (
         </p>
       </Hero>
       <Hero>
-        <h1 className="text-5xl font-semibold text-secondary">History</h1>
+        <h1 className="text-5xl font-semibold text-secondary text-center">
+          History
+        </h1>
         <p className="text-center mt-4 text-xl">
           When I was 16, I missed an opportunity to feed someone out of
           stupidity. {new Date().getFullYear() - 2008} years later, I still
@@ -58,7 +62,9 @@ const About: NextPage<Props> = ({ loggedIn }) => (
         </p>
       </Hero>
       <Hero>
-        <h1 className="text-5xl font-semibold text-secondary">Tech</h1>
+        <h1 className="text-5xl font-semibold text-secondary text-center">
+          Tech
+        </h1>
         <p className="text-center mt-4 text-xl">
           Helpling is built with open-source technology and the source code is
           publicly available on&nbsp;

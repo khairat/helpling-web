@@ -19,7 +19,9 @@ const PrivacyPolicy: NextPage<Props> = ({ loggedIn }) => (
 
     <main className="justify-center">
       <Hero>
-        <h1 className="text-5xl font-semibold text-accent">Privacy policy</h1>
+        <h1 className="text-5xl font-semibold text-accent text-center">
+          Privacy policy
+        </h1>
         <p className="text-center mt-4">
           You login with Google, so we have your email and name. You set your
           own username and that&apos;s what other users see. I won&apos;t share

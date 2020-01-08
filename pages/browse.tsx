@@ -48,39 +48,41 @@ const Browse: NextPage<Props> = ({ userId }) => {
           </>
         )}
         {!loading && requests.length > 0 && (
-          <table className="bg-primary">
-            <thead>
-              <tr>
-                <th>Request</th>
-                <th className="text-center">Type</th>
-                <th>Status</th>
-                <th>Posted</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map(
-                ({ createdAt, description, id, status, type }, index) => (
-                  <tr key={index}>
-                    <td>
-                      <Link href={`/requests/${id}`}>
-                        <a>{description}</a>
-                      </Link>
-                    </td>
-                    <td>
-                      <img
-                        alt={type}
-                        className="h-8 w-8 m-auto"
-                        src={img_request_types[type]}
-                        title={type}
-                      />
-                    </td>
-                    <td>{startCase(status)}</td>
-                    <td>{moment(createdAt.toDate()).fromNow()}</td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
+          <div className="bg-primary overflow-auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Request</th>
+                  <th className="text-center">Type</th>
+                  <th>Status</th>
+                  <th>Posted</th>
+                </tr>
+              </thead>
+              <tbody>
+                {requests.map(
+                  ({ createdAt, description, id, status, type }, index) => (
+                    <tr key={index}>
+                      <td>
+                        <Link href={`/requests/${id}`}>
+                          <a>{description}</a>
+                        </Link>
+                      </td>
+                      <td>
+                        <img
+                          alt={type}
+                          className="h-8 w-8 m-auto"
+                          src={img_request_types[type]}
+                          title={type}
+                        />
+                      </td>
+                      <td>{startCase(status)}</td>
+                      <td>{moment(createdAt.toDate()).fromNow()}</td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
       </main>
 
