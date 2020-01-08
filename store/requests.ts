@@ -13,11 +13,9 @@ type StoreApi = StoreActionApi<State>
 let unsubscribeFetch: () => void
 
 const actions = {
-  create: (
-    userId: string,
-    data: Partial<Request>,
-    payPalEmail?: string
-  ) => async ({ setState }: StoreApi) => {
+  create: (userId: string, data: Partial<Request>) => async ({
+    setState
+  }: StoreApi) => {
     setState({
       creating: true
     })
@@ -37,12 +35,6 @@ const actions = {
         updatedAt: new Date(),
         user
       })
-
-    if (payPalEmail) {
-      await user.update({
-        payPalEmail
-      })
-    }
 
     setState({
       creating: false

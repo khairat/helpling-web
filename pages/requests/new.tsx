@@ -6,7 +6,12 @@ import React, { useState } from 'react'
 import { Footer, Header, Spinner } from '../../components'
 import { auth, redirect } from '../../lib'
 import { useRequests } from '../../store'
-import { RequestType, RequestTypes } from '../../store/types'
+import {
+  RequestPaymentMethod,
+  RequestPaymentMethods,
+  RequestType,
+  RequestTypes
+} from '../../store/types'
 
 interface Props {
   userId?: string
@@ -14,8 +19,9 @@ interface Props {
 
 const NewRequest: NextPage<Props> = ({ userId }) => {
   const [description, setDescription] = useState('')
-  const [payPalEmail, setPayPalEmail] = useState('')
+  const [paymentEmail, setPaymentEmail] = useState('')
   const [type, setType] = useState<RequestType>()
+  const [paymentMethod, setPaymentMethod] = useState<RequestPaymentMethod>()
 
   const [{ creating }, { create }] = useRequests()
 
@@ -36,14 +42,12 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
             event.preventDefault()
 
             if (userId && description && type) {
-              const id = await create(
-                userId,
-                {
-                  description,
-                  type
-                },
-                payPalEmail
-              )
+              const id = await create(userId, {
+                description,
+                paymentEmail,
+                paymentMethod,
+                type
+              })
 
               Router.push(`/requests/${id}`)
             }
@@ -55,6 +59,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
               placeholder="Type"
               required
               value={type}>
+              <option disabled={!!type}>Type</option>
               {Object.entries(RequestTypes).map(([value, label], index) => (
                 <option key={index} value={value}>
                   {label}
@@ -63,15 +68,42 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
             </select>
           </label>
           {type === 'money' && (
-            <label>
-              <span>Share your PayPal email so someone can send you cash.</span>
-              <input
-                onChange={event => setPayPalEmail(event.target.value)}
-                placeholder="PayPal email"
-                type="email"
-                value={payPalEmail}
-              />
-            </label>
+            <>
+              <label>
+                <span>Payment method</span>
+                <select
+                  onChange={event =>
+                    setPaymentMethod(event.target.value as RequestPaymentMethod)
+                  }
+                  placeholder="Method"
+                  required
+                  value={paymentMethod}>
+                  <option disabled={!!paymentMethod}>Method</option>
+                  {Object.entries(RequestPaymentMethods).map(
+                    ([value, label], index) => (
+                      <option key={index} value={value}>
+                        {label}
+                      </option>
+                    )
+                  )}
+                </select>
+              </label>
+              <label>
+                <span>
+                  Share your
+                  {paymentMethod
+                    ? ` ${RequestPaymentMethods[paymentMethod]} `
+                    : ' '}
+                  email so someone can send you cash.
+                </span>
+                <input
+                  onChange={event => setPaymentEmail(event.target.value)}
+                  placeholder="Email"
+                  type="email"
+                  value={paymentEmail}
+                />
+              </label>
+            </>
           )}
           <label>
             <span>Describe your request. What do you need?</span>

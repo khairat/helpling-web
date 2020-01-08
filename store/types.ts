@@ -1,11 +1,14 @@
 import { firestore } from 'firebase'
 
-export type RequestType = 'food' | 'invite' | 'money' | 'physical'
+export type RequestPaymentMethod = 'cashApp' | 'payPal' | 'venmo'
 export type RequestStatus = 'pending' | 'complete'
+export type RequestType = 'food' | 'invite' | 'money' | 'physical'
 
 export interface Request {
   id: string
   description: string
+  paymentEmail?: string
+  paymentMethod?: RequestPaymentMethod
   status: RequestStatus
   type: RequestType
   user: firestore.DocumentReference<User>
@@ -18,7 +21,6 @@ export interface User {
   city: string
   country: string
   name: string
-  payPalEmail?: string
   createdAt: firestore.Timestamp
 }
 
@@ -27,4 +29,10 @@ export enum RequestTypes {
   invite = 'Invite',
   money = 'Money',
   physical = 'Physical'
+}
+
+export enum RequestPaymentMethods {
+  cashApp = 'Cash App',
+  payPal = 'PayPal',
+  venmo = 'Venmo'
 }
