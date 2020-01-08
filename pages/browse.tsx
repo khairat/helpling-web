@@ -76,7 +76,9 @@ const Browse: NextPage<Props> = ({ userId }) => {
                         />
                       </td>
                       <td>{startCase(status)}</td>
-                      <td>{moment(createdAt.toDate()).fromNow()}</td>
+                      <td className="whitespace-no-wrap">
+                        {moment(createdAt.toDate()).fromNow()}
+                      </td>
                     </tr>
                   )
                 )}
