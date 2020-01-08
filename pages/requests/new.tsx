@@ -35,9 +35,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
       <Header loggedIn={!!userId} />
 
       <main className="main">
-        <h1 className="text-5xl font-semibold text-secondary mb-8">
-          New request
-        </h1>
+        <h1 className="text-5xl font-semibold text-secondary">New request</h1>
         <form
           onSubmit={async event => {
             event.preventDefault()
