@@ -33,10 +33,19 @@ const Browse: NextPage<Props> = ({ userId }) => {
         <h1 className="text-5xl font-semibold mb-8 text-secondary">Browse</h1>
         {loading && <Spinner className="mt-4" />}
         {!loading && requests.length === 0 && (
-          <p>
-            Hallelujah! Everyone is fed and warm. Come back later to find people
-            who have made requests.
-          </p>
+          <>
+            <p>
+              Hallelujah! Everyone is fed and warm. Come back later to find
+              people who have made requests.
+            </p>
+            <p className="mt-4">
+              Looking for your requests? You can find them&nbsp;
+              <Link href="/requests">
+                <a>here</a>
+              </Link>
+              .
+            </p>
+          </>
         )}
         {!loading && requests.length > 0 && (
           <table className="bg-primary">
