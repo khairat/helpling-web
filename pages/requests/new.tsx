@@ -18,6 +18,7 @@ interface Props {
 }
 
 const NewRequest: NextPage<Props> = ({ userId }) => {
+  const [cashRequired, setCashRequired] = useState(10)
   const [description, setDescription] = useState('')
   const [paymentEmail, setPaymentEmail] = useState('')
   const [type, setType] = useState<RequestType>()
@@ -43,6 +44,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
 
             if (userId && description && type) {
               const id = await create(userId, {
+                cashRequired,
                 description,
                 paymentEmail,
                 paymentMethod,
@@ -59,7 +61,9 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
               placeholder="Type"
               required
               value={type}>
-              <option disabled={!!type}>Type</option>
+              <option disabled={!!type} value="">
+                Type
+              </option>
               {Object.entries(RequestTypes).map(([value, label], index) => (
                 <option key={index} value={value}>
                   {label}
@@ -78,7 +82,9 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
                   placeholder="Method"
                   required
                   value={paymentMethod}>
-                  <option disabled={!!paymentMethod}>Method</option>
+                  <option disabled={!!paymentMethod} value="">
+                    Method
+                  </option>
                   {Object.entries(RequestPaymentMethods).map(
                     ([value, label], index) => (
                       <option key={index} value={value}>
@@ -99,8 +105,24 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
                 <input
                   onChange={event => setPaymentEmail(event.target.value)}
                   placeholder="Email"
+                  required
                   type="email"
                   value={paymentEmail}
+                />
+              </label>
+              <label>
+                <span>How much do you need? In USD.</span>
+                <input
+                  max={200}
+                  min={10}
+                  onChange={event =>
+                    setCashRequired(Number(event.target.value))
+                  }
+                  placeholder="Cash"
+                  required
+                  step={10}
+                  type="number"
+                  value={String(cashRequired)}
                 />
               </label>
             </>
@@ -110,6 +132,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
             <textarea
               onChange={event => setDescription(event.target.value)}
               placeholder="Description"
+              required
               value={description}
             />
           </label>

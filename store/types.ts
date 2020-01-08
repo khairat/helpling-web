@@ -6,6 +6,7 @@ export type RequestType = 'food' | 'invite' | 'money' | 'physical'
 
 export interface Request {
   id: string
+  cashRequired?: number
   description: string
   paymentEmail?: string
   paymentMethod?: RequestPaymentMethod
