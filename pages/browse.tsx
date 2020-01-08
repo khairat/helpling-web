@@ -39,7 +39,7 @@ const Browse: NextPage<Props> = ({ userId }) => {
           </p>
         )}
         {!loading && requests.length > 0 && (
-          <table className="bg-primary rounded">
+          <table className="bg-primary">
             <thead>
               <tr>
                 <th>Request</th>

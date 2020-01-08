@@ -54,7 +54,6 @@ const SignIn: NextPage = () => {
               <label>
                 <span>Pick a username</span>
                 <input
-                  className="bg-primary"
                   onChange={event => setName(event.target.value)}
                   placeholder="Username"
                   required
@@ -65,7 +64,6 @@ const SignIn: NextPage = () => {
               <label>
                 <span>Where are you from?</span>
                 <select
-                  className="bg-primary"
                   onChange={event => {
                     setCountry(event.target.value)
                     setCity(undefined)
@@ -83,7 +81,6 @@ const SignIn: NextPage = () => {
               {country && (
                 <label>
                   <select
-                    className="bg-primary"
                     onChange={event => setCity(event.target.value)}
                     placeholder="Country"
                     required

@@ -4,18 +4,62 @@ import { firebase } from '../lib'
 import { Request } from './types'
 
 interface State {
+  creating: boolean
   loading: boolean
   requests: Request[]
 }
 type StoreApi = StoreActionApi<State>
 
+let unsubscribeFetch: () => void
+
 const actions = {
+  create: (
+    userId: string,
+    data: Partial<Request>,
+    payPalEmail?: string
+  ) => async ({ setState }: StoreApi) => {
+    setState({
+      creating: true
+    })
+
+    const user = firebase
+      .firestore()
+      .collection('users')
+      .doc(userId)
+
+    const { id } = await firebase
+      .firestore()
+      .collection('requests')
+      .add({
+        ...data,
+        createdAt: new Date(),
+        status: 'pending',
+        updatedAt: new Date(),
+        user
+      })
+
+    if (payPalEmail) {
+      await user.update({
+        payPalEmail
+      })
+    }
+
+    setState({
+      creating: false
+    })
+
+    return id
+  },
   fetch: (userId?: string) => ({ setState }: StoreApi) => {
+    if (unsubscribeFetch !== undefined) {
+      return
+    }
+
     setState({
       loading: true
     })
 
-    firebase
+    unsubscribeFetch = firebase
       .firestore()
       .collection('requests')
       .where('status', '==', 'pending')
@@ -41,6 +85,7 @@ const actions = {
 type Actions = typeof actions
 
 const initialState = {
+  creating: false,
   loading: false,
   requests: []
 }

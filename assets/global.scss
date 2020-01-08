@@ -57,7 +57,9 @@ button {
 input,
 textarea,
 select {
-  @apply appearance-none bg-primary-dark p-4 rounded outline-none w-full;
+  @apply appearance-none bg-primary rounded-none p-4 outline-none w-full;
+
+  transform: skew(-0.5deg, 0.5deg);
 }
 
 label {
@@ -73,7 +75,10 @@ label {
 }
 
 select {
-  background: url('/img/expand.svg') calc(100% - 1em) center / 1.5em no-repeat;
+  background-image: url('/img/expand.svg');
+  background-position: calc(100% - 1em) center;
+  background-repeat: no-repeat;
+  background-size: 1.5em;
 }
 
 textarea {
@@ -168,8 +173,13 @@ table {
 @media (min-width: 640px) {
   button,
   input,
+  select,
   textarea {
     max-width: 100%;
     width: 20rem;
+  }
+
+  textarea {
+    width: 30em;
   }
 }

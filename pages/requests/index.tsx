@@ -58,7 +58,7 @@ const Requests: NextPage<Props> = ({ userId }) => {
           </p>
         )}
         {!fetching && requests.length > 0 && (
-          <table className="bg-primary rounded">
+          <table className="bg-primary">
             <thead>
               <tr>
                 <th>Request</th>
