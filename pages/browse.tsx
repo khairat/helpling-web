@@ -15,10 +15,10 @@ interface Props {
 }
 
 const Browse: NextPage<Props> = ({ userId }) => {
-  const [{ loading, requests }, { fetch }] = useRequests()
+  const [{ loading, requests }, { fetchAll }] = useRequests()
 
   useEffect(() => {
-    fetch(userId)
+    fetchAll(userId)
   }, [])
 
   return (

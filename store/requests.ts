@@ -10,7 +10,7 @@ interface State {
 }
 type StoreApi = StoreActionApi<State>
 
-let unsubscribeFetch: () => void
+let unsubscribeFetchAll: () => void
 
 const actions = {
   create: (userId: string, data: Partial<Request>) => async ({
@@ -42,8 +42,8 @@ const actions = {
 
     return id
   },
-  fetch: (userId?: string) => ({ setState }: StoreApi) => {
-    if (unsubscribeFetch !== undefined) {
+  fetchAll: (userId?: string) => ({ setState }: StoreApi) => {
+    if (unsubscribeFetchAll !== undefined) {
       return
     }
 
@@ -51,7 +51,7 @@ const actions = {
       loading: true
     })
 
-    unsubscribeFetch = firebase
+    unsubscribeFetchAll = firebase
       .firestore()
       .collection('requests')
       .where('status', '==', 'pending')
