@@ -1,3 +1,4 @@
+export { Error } from './error'
 export { Footer } from './footer'
 export { Header } from './header'
 export { Hero } from './hero'

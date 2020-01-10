@@ -20,9 +20,9 @@ interface Props {
 const NewRequest: NextPage<Props> = ({ userId }) => {
   const [cashRequired, setCashRequired] = useState(10)
   const [description, setDescription] = useState('')
-  const [paymentEmail, setPaymentEmail] = useState('')
-  const [type, setType] = useState<RequestType>()
+  const [paymentLink, setPaymentLink] = useState('')
   const [paymentMethod, setPaymentMethod] = useState<RequestPaymentMethod>()
+  const [type, setType] = useState<RequestType>()
 
   const [{ creating }, { create }] = useRequests()
 
@@ -44,7 +44,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
               const id = await create(userId, {
                 cashRequired,
                 description,
-                paymentEmail,
+                paymentLink,
                 paymentMethod,
                 type
               })
@@ -92,22 +92,36 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
                   )}
                 </select>
               </label>
-              <label>
-                <span>
-                  Share your
-                  {paymentMethod
-                    ? ` ${RequestPaymentMethods[paymentMethod]} `
-                    : ' '}
-                  email so someone can send you cash.
-                </span>
-                <input
-                  onChange={event => setPaymentEmail(event.target.value)}
-                  placeholder="Email"
-                  required
-                  type="email"
-                  value={paymentEmail}
-                />
-              </label>
+              {paymentMethod && (
+                <label>
+                  <span>
+                    Share your
+                    {paymentMethod === 'cashApp'
+                      ? ' $Cashtag '
+                      : paymentMethod === 'payPal'
+                      ? ' PayPal.me link '
+                      : paymentMethod === 'venmo'
+                      ? ' Venmo code '
+                      : ' '}
+                    so someone can send you cash.
+                  </span>
+                  <input
+                    onChange={event => setPaymentLink(event.target.value)}
+                    placeholder={
+                      paymentMethod === 'cashApp'
+                        ? '$Cashtag'
+                        : paymentMethod === 'payPal'
+                        ? 'Link'
+                        : paymentMethod === 'venmo'
+                        ? 'Code'
+                        : ''
+                    }
+                    required
+                    type="text"
+                    value={paymentLink}
+                  />
+                </label>
+              )}
               <label>
                 <span>How much do you need? In USD.</span>
                 <input

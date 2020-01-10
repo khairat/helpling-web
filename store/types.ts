@@ -1,15 +1,18 @@
-import { firestore } from 'firebase'
+import { firestore } from 'firebase/app'
 
 export type RequestPaymentMethod = 'cashApp' | 'payPal' | 'venmo'
-export type RequestStatus = 'pending' | 'complete'
+export type RequestStatus = 'pending' | 'accepted' | 'complete'
 export type RequestType = 'food' | 'invite' | 'money' | 'physical'
 
 export interface Request {
   id: string
   cashRequired?: number
   description: string
-  paymentEmail?: string
+  helper?: firestore.DocumentReference<User>
+  helpling?: User
+  paymentLink?: string
   paymentMethod?: RequestPaymentMethod
+  poster?: User
   status: RequestStatus
   type: RequestType
   user: firestore.DocumentReference<User>

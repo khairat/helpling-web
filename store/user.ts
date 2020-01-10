@@ -12,7 +12,7 @@ interface State {
 }
 type StoreApi = StoreActionApi<State>
 
-const initialState = {
+const initialState: State = {
   fetching: false,
   loading: false,
   requests: [],
