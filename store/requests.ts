@@ -98,7 +98,7 @@ const actions = {
 
           const user = await request.user.get()
 
-          request.poster = {
+          request._user = {
             id: user.id,
             ...user.data()
           } as User
@@ -106,7 +106,7 @@ const actions = {
           if (request.helper) {
             const helper = await request.helper.get()
 
-            request.helpling = {
+            request._helper = {
               id: helper.id,
               ...helper.data()
             } as User

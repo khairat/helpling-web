@@ -35,7 +35,7 @@ const Request: NextPage<Props> = ({ userId }) => {
   const render = (children: ReactNode) => (
     <>
       <Head>
-        <title>Request / Helpling</title>
+        <title>Request / _helper</title>
       </Head>
 
       <Header loggedIn={!!userId} />
@@ -68,8 +68,8 @@ const Request: NextPage<Props> = ({ userId }) => {
           </div>
           <div className="mt-4 flex flex-col lg:flex-row lg:items-center text-gray-400">
             <span>
-              <Link href={`/people/${request.poster?.id}`}>
-                <a>{request.poster?.name}</a>
+              <Link href={`/people/${request._user?.id}`}>
+                <a>{request._user?.name}</a>
               </Link>
             </span>
             <span className="mt-4 lg:mt-0 lg:ml-4">
@@ -92,7 +92,7 @@ const Request: NextPage<Props> = ({ userId }) => {
           </div>
           {request.user.id !== userId &&
             request.status === 'pending' &&
-            !request.helpling && (
+            !request._helper && (
               <div className="mt-12">
                 <p className="mt-4">Would you like to accept this request?</p>
                 <button
@@ -107,16 +107,16 @@ const Request: NextPage<Props> = ({ userId }) => {
                 </button>
               </div>
             )}
-          {request.helpling && request.helpling.id === userId && (
+          {request._helper && request._helper.id === userId && (
             <div className="mt-12">
               <p className="mt-4">Bravo! You have accepted this request.</p>
               <p className="mt-4">
                 Head on&nbsp;
-                <Link href={`/messages/${request.poster?.id}`}>
+                <Link href={`/messages/${request._user?.id}`}>
                   <a>over here</a>
                 </Link>
-                &nbsp;to talk to {request.poster?.name} to find out how to
-                fulfil this request.
+                &nbsp;to talk to {request._user?.name} to find out how to fulfil
+                this request.
               </p>
               {request.type === 'money' && (
                 <div className="my-8 bg-primary inline-block p-4">
@@ -124,7 +124,7 @@ const Request: NextPage<Props> = ({ userId }) => {
                     Payment details
                   </h3>
                   <p className="mt-2">
-                    You can send money directly to {request.poster?.name}.
+                    You can send money directly to {request._user?.name}.
                   </p>
                   <p className="mt-4 flex">
                     <a
@@ -141,17 +141,17 @@ const Request: NextPage<Props> = ({ userId }) => {
               )}
             </div>
           )}
-          {request.user.id === userId && request.helpling && (
+          {request.user.id === userId && request._helper && (
             <div className="mt-12">
               <p className="mt-4">
-                <Link href={`/people/${request.helpling.id}`}>
-                  <a>{request.helpling.name}</a>
+                <Link href={`/people/${request._helper.id}`}>
+                  <a>{request._helper.name}</a>
                 </Link>
                 &nbsp; has accepted your request.
               </p>
               <p className="mt-4">
                 Head on&nbsp;
-                <Link href={`/messages/${request.helpling?.id}`}>
+                <Link href={`/messages/${request._helper?.id}`}>
                   <a>over here</a>
                 </Link>
                 &nbsp;to talk to them.

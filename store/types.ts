@@ -9,13 +9,13 @@ export interface Request {
   cashRequired?: number
   description: string
   helper?: firestore.DocumentReference<User>
-  helpling?: User
+  _helper?: User
   paymentLink?: string
   paymentMethod?: RequestPaymentMethod
-  poster?: User
   status: RequestStatus
   type: RequestType
   user: firestore.DocumentReference<User>
+  _user?: User
   createdAt: firestore.Timestamp
   updatedAt: firestore.Timestamp
 }
