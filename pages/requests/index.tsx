@@ -58,7 +58,7 @@ const Requests: NextPage<Props> = ({ userId }) => {
           </p>
         )}
         {!fetching && requests.length > 0 && (
-          <div className="bg-primary overflow-auto">
+          <div className="bg-primary overflow-auto rounded">
             <table>
               <thead>
                 <tr>

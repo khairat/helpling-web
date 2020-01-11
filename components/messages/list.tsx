@@ -20,7 +20,7 @@ export const List: FunctionComponent<Props> = ({
   threads,
   userId
 }) => (
-  <aside id="list" className="bg-primary flex flex-col w-64 skewed small">
+  <aside id="list" className="bg-primary flex flex-col w-64 rounded">
     {loading && threads.length === 0 && <Spinner className="m-8" />}
     {!loading && threads.length === 0 && <p>No messages yet.</p>}
     {threads.map(({ _users, id }, index) => (

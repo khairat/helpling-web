@@ -56,7 +56,7 @@ export const Thread: FunctionComponent<Props> = ({
       style={{
         height
       }}
-      className="bg-primary flex-1 flex-col flex ml-8 skewed small">
+      className="bg-primary flex-1 flex-col flex ml-8 rounded overflow-hidden">
       <div
         id="messages"
         className={clsx(
@@ -64,7 +64,7 @@ export const Thread: FunctionComponent<Props> = ({
           'flex-col-reverse',
           'flex',
           'overflow-auto',
-          'py-4',
+          'py-2',
 
           messages.length === 0 && 'justify-center items-center'
         )}>

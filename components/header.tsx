@@ -29,7 +29,14 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
         </a>
       </Link>
       <a
-        className="absolute top-0 right-0 lg:hidden z-20"
+        className={clsx(
+          'lg:hidden',
+          'right-0',
+          'top-0',
+          'z-20',
+
+          visible ? 'fixed' : 'absolute'
+        )}
         href="#menu"
         onClick={event => {
           event.preventDefault()

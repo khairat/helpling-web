@@ -48,7 +48,7 @@ const Browse: NextPage<Props> = ({ userId }) => {
           </>
         )}
         {!loading && requests.length > 0 && (
-          <div className="bg-primary overflow-auto">
+          <div className="bg-primary overflow-auto rounded">
             <table>
               <thead>
                 <tr>

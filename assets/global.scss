@@ -57,9 +57,7 @@ button {
 input,
 textarea,
 select {
-  @apply appearance-none bg-primary rounded-none p-4 outline-none w-full;
-
-  transform: skew(-0.5deg, 0.5deg);
+  @apply appearance-none bg-primary rounded p-4 outline-none w-full;
 }
 
 label {
@@ -135,7 +133,6 @@ table {
         position: absolute;
         right: 0;
         top: 0;
-        transform: skew(-1deg, 0.5deg);
         width: calc(100% + 4em);
         z-index: -1;
       }
@@ -146,9 +143,7 @@ table {
 // components
 
 .button {
-  @apply flex items-center justify-center bg-accent text-white px-8 py-4 font-semibold;
-
-  transform: skew(0.5deg, -1deg);
+  @apply flex items-center justify-center bg-accent rounded text-white px-8 py-4 font-semibold;
 
   &:hover {
     filter: brightness(1.2);
@@ -160,16 +155,6 @@ table {
 
   &.small {
     @apply px-3 py-2;
-  }
-}
-
-.skewed {
-  display: block;
-  transform: skew(1deg, -2deg);
-
-  &.small {
-    display: inherit;
-    transform: skew(0.25deg, -0.25deg);
   }
 }
 

@@ -12,7 +12,6 @@ export const Message: FunctionComponent<Props> = ({ message, type }) => (
       'font-medium',
       'my-8',
       'p-4',
-      'skewed',
       'text-white',
 
       type === 'message' && 'bg-blue-500',

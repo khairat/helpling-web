@@ -48,7 +48,7 @@ export const NavLink: FunctionComponent<LinkProps &
         a:hover:before,
         a.active:before {
           background: #ea5167;
-          transform: skew(-6deg, 5deg) scale(1.25);
+          transform: skew(-3deg, 2deg) scale(1.25);
         }
       `}</style>
     </>
