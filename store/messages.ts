@@ -54,6 +54,14 @@ const actions = {
         users: [data?.user, data?.helper]
       })
 
+    await firebase
+      .firestore()
+      .collection('requests')
+      .doc(requestId)
+      .update({
+        thread
+      })
+
     return thread.id
   },
   fetch: (userId: string) => ({ setState }: StoreApi) => {

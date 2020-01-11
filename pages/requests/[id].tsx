@@ -112,7 +112,12 @@ const Request: NextPage<Props> = ({ userId }) => {
               <p className="mt-4">Bravo! You have accepted this request.</p>
               <p className="mt-4">
                 Head on&nbsp;
-                <Link href={`/messages/new?request=${request.id}`}>
+                <Link
+                  href={
+                    request.thread
+                      ? `/messages?thread=${request.thread.id}`
+                      : `/messages/new?request=${request.id}`
+                  }>
                   <a>over here</a>
                 </Link>
                 &nbsp;to talk to {request._user?.name} to find out how to fulfil
@@ -151,7 +156,12 @@ const Request: NextPage<Props> = ({ userId }) => {
               </p>
               <p className="mt-4">
                 Head on&nbsp;
-                <Link href={`/messages/new?request=${request.id}`}>
+                <Link
+                  href={
+                    request.thread
+                      ? `/messages?thread=${request.thread.id}`
+                      : `/messages/new?request=${request.id}`
+                  }>
                   <a>over here</a>
                 </Link>
                 &nbsp;to talk to them.

@@ -13,6 +13,7 @@ export interface Request {
   paymentLink?: string
   paymentMethod?: RequestPaymentMethod
   status: RequestStatus
+  thread?: firestore.DocumentReference<Thread>
   type: RequestType
   user: firestore.DocumentReference<User>
   _user?: User
