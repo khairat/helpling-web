@@ -23,6 +23,39 @@ const initialState: State = {
 }
 
 const actions = {
+  createOrFetch: (requestId: string) => async () => {
+    const request = firebase
+      .firestore()
+      .collection('requests')
+      .doc(requestId)
+
+    const { docs } = await firebase
+      .firestore()
+      .collection('threads')
+      .where('request', '==', request)
+      .limit(1)
+      .get()
+
+    if (docs.length > 0) {
+      return docs[0].id
+    }
+
+    const doc = await request.get()
+
+    const data = doc.data()
+
+    const thread = await firebase
+      .firestore()
+      .collection('threads')
+      .add({
+        createdAt: new Date(),
+        request,
+        updatedAt: new Date(),
+        users: [data?.user, data?.helper]
+      })
+
+    return thread.id
+  },
   fetch: (userId: string) => ({ setState }: StoreApi) => {
     setState({
       loading: true
