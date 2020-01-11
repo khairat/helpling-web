@@ -38,6 +38,7 @@ const actions = {
       .doc(id)
       .update({
         helper,
+        status: 'accepted',
         updatedAt: new Date()
       })
 
