@@ -20,6 +20,22 @@ export interface Request {
   updatedAt: firestore.Timestamp
 }
 
+export interface Thread {
+  id: string
+  users: firestore.DocumentReference<User>[]
+  _users: User[]
+  createdAt: firestore.Timestamp
+  updatedAt: firestore.Timestamp
+}
+
+export interface Message {
+  id: string
+  body: string
+  user: firestore.DocumentReference<User>
+  _user: User
+  createdAt: firestore.Timestamp
+}
+
 export interface User {
   id: string
   city: string

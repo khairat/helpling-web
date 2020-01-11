@@ -65,6 +65,7 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
           <>
             <NavLink href="/browse">Browse</NavLink>
             <NavLink href="/requests">Requests</NavLink>
+            <NavLink href="/messages">Messages</NavLink>
             <NavLink href="/profile">Profile</NavLink>
             <NavLink
               href="/sign-out"

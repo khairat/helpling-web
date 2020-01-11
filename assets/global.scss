@@ -166,6 +166,11 @@ table {
 .skewed {
   display: block;
   transform: skew(1deg, -2deg);
+
+  &.small {
+    display: inherit;
+    transform: skew(0.25deg, -0.25deg);
+  }
 }
 
 // responsive
