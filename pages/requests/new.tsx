@@ -69,6 +69,17 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
               ))}
             </select>
           </label>
+          {type && (
+            <p className="mt-4 text-lg text-gray-500">
+              {type === 'food'
+                ? `Haven't received your salary yet? Unexpected expenses prevent you from buying food or groceries?`
+                : type === 'invite'
+                ? `Need help getting a job interview? Or just moved to a new city and don't know anyone?`
+                : type === 'money'
+                ? `Need financial help for an unexpected expense?`
+                : `Moved to a new apartment and need some furniture?`}
+            </p>
+          )}
           {type === 'money' && (
             <>
               <label>
