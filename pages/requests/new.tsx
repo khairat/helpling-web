@@ -41,13 +41,23 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
             event.preventDefault()
 
             if (userId && description && type) {
-              const id = await create(userId, {
-                cashRequired,
+              const data: Record<string, string | number> = {
                 description,
-                paymentLink,
-                paymentMethod,
                 type
-              })
+              }
+
+              if (
+                type === 'money' &&
+                cashRequired &&
+                paymentLink &&
+                paymentMethod
+              ) {
+                data.cashRequired = cashRequired
+                data.paymentLink = paymentLink
+                data.paymentMethod = paymentMethod
+              }
+
+              const id = await create(userId, data)
 
               Router.push(`/requests/${id}`)
             }

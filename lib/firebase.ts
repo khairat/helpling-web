@@ -1,9 +1,10 @@
 // eslint-disable-next-line simple-import-sort/sort
-import { initializeApp, auth, firestore } from 'firebase/app'
+import { auth, firestore, functions, initializeApp } from 'firebase/app'
 
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/functions'
 
 const config = Buffer.from(process.env.FIREBASE_CONFIG, 'base64').toString()
 
@@ -21,5 +22,6 @@ try {
 
 export const firebase = {
   auth,
-  firestore
+  firestore,
+  functions
 }

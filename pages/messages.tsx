@@ -3,10 +3,10 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 
-import { Footer, Header } from '../../components'
-import { List, Thread } from '../../components/messages'
-import { auth, redirect } from '../../lib'
-import { useMessages } from '../../store'
+import { Footer, Header } from '../components'
+import { List, Thread } from '../components/messages'
+import { auth, redirect } from '../lib'
+import { useMessages } from '../store'
 
 interface Props {
   userId: string
@@ -45,7 +45,7 @@ const Messages: NextPage<Props> = ({ userId }) => {
 
       <main className="main">
         <h1 className="text-5xl font-semibold mb-8 text-secondary">Messages</h1>
-        <section className="flex flex-1 mb-4">
+        <section className="flex flex-1">
           <List
             loading={loading}
             onChange={threadId => push(`/messages?thread=${threadId}`)}

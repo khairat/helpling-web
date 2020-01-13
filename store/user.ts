@@ -8,6 +8,7 @@ interface State {
   fetching: boolean
   loading: boolean
   requests: Request[]
+  requestsHelpling: Request[]
   user: User | null
 }
 type StoreApi = StoreActionApi<State>
@@ -16,11 +17,13 @@ const initialState: State = {
   fetching: false,
   loading: false,
   requests: [],
+  requestsHelpling: [],
   user: null
 }
 
 let unsubscribeFetch: () => void
 let unsubscribeFetchRequests: () => void
+let unsubscribeFetchRequestsHelpling: () => void
 
 const actions = {
   fetch: (userId: string) => ({ setState }: StoreApi) => {
@@ -59,15 +62,10 @@ const actions = {
       fetching: true
     })
 
-    const user = firebase
-      .firestore()
-      .collection('users')
-      .doc(userId)
-
     unsubscribeFetchRequests = firebase
       .firestore()
       .collection('requests')
-      .where('user', '==', user)
+      .where('userId', '==', userId)
       .orderBy('updatedAt', 'desc')
       .onSnapshot(({ docs }) => {
         const requests = docs.map(doc => ({
@@ -78,6 +76,32 @@ const actions = {
         setState({
           fetching: false,
           requests
+        })
+      })
+  },
+  fetchRequestsHelpling: (userId: string) => async ({ setState }: StoreApi) => {
+    if (unsubscribeFetchRequestsHelpling !== undefined) {
+      return
+    }
+
+    setState({
+      fetching: true
+    })
+
+    unsubscribeFetchRequestsHelpling = firebase
+      .firestore()
+      .collection('requests')
+      .where('helplingId', '==', userId)
+      .orderBy('updatedAt', 'desc')
+      .onSnapshot(({ docs }) => {
+        const requestsHelpling = docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Request[]
+
+        setState({
+          fetching: false,
+          requestsHelpling
         })
       })
   },
@@ -122,7 +146,6 @@ const actions = {
             .doc(user?.uid)
             .set({
               createdAt: new Date(),
-              email: user?.email,
               id: user?.uid,
               name: user?.displayName
             })

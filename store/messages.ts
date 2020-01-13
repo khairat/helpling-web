@@ -1,7 +1,7 @@
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
 import { firebase } from '../lib'
-import { Message, Thread, User } from './types'
+import { Message, Request, Thread, User } from './types'
 
 interface State {
   creating: boolean
@@ -23,61 +23,15 @@ const initialState: State = {
 }
 
 const actions = {
-  createOrFetch: (requestId: string) => async () => {
-    const request = firebase
-      .firestore()
-      .collection('requests')
-      .doc(requestId)
-
-    const { docs } = await firebase
-      .firestore()
-      .collection('threads')
-      .where('request', '==', request)
-      .limit(1)
-      .get()
-
-    if (docs.length > 0) {
-      return docs[0].id
-    }
-
-    const doc = await request.get()
-
-    const data = doc.data()
-
-    const thread = await firebase
-      .firestore()
-      .collection('threads')
-      .add({
-        createdAt: new Date(),
-        request,
-        updatedAt: new Date(),
-        users: [data?.user, data?.helper]
-      })
-
-    await firebase
-      .firestore()
-      .collection('requests')
-      .doc(requestId)
-      .update({
-        thread
-      })
-
-    return thread.id
-  },
   fetch: (userId: string) => ({ setState }: StoreApi) => {
     setState({
       loading: true
     })
 
-    const user = firebase
-      .firestore()
-      .collection('users')
-      .doc(userId)
-
     firebase
       .firestore()
       .collection('threads')
-      .where('users', 'array-contains', user)
+      .where('userIds', 'array-contains', userId)
       .orderBy('updatedAt', 'desc')
       .onSnapshot(async ({ docs }) => {
         const threads = docs.map(doc => ({
@@ -87,18 +41,37 @@ const actions = {
 
         await Promise.all(
           threads.map(async thread => {
-            const _users = await Promise.all(
-              thread.users.map(async user => {
-                const _user = await user.get()
+            const users = await Promise.all(
+              thread.userIds.map(async userId => {
+                const user = await firebase
+                  .firestore()
+                  .collection('users')
+                  .doc(userId)
+                  .get()
 
                 return {
-                  id: _user.id,
-                  ..._user.data()
+                  id: user.id,
+                  ...user.data()
                 } as User
               })
             )
 
-            thread._users = _users
+            thread.users = users
+          })
+        )
+
+        await Promise.all(
+          threads.map(async thread => {
+            const request = await firebase
+              .firestore()
+              .collection('requests')
+              .doc(thread.requestId)
+              .get()
+
+            thread.request = {
+              id: request.id,
+              ...request.data()
+            } as Request
           })
         )
 
@@ -113,15 +86,10 @@ const actions = {
       loadingMessages: true
     })
 
-    const thread = firebase
-      .firestore()
-      .collection('threads')
-      .doc(threadId)
-
     firebase
       .firestore()
       .collection('messages')
-      .where('thread', '==', thread)
+      .where('threadId', '==', threadId)
       .orderBy('createdAt', 'desc')
       .onSnapshot(async ({ docs }) => {
         const messages = docs.map(doc => ({
@@ -131,14 +99,16 @@ const actions = {
 
         await Promise.all(
           messages.map(async message => {
-            const user = await message.user.get()
+            const user = await firebase
+              .firestore()
+              .collection('users')
+              .doc(message.userId)
+              .get()
 
-            const _user = {
+            message.user = {
               id: user.id,
               ...user.data()
             } as User
-
-            message._user = _user
           })
         )
 
@@ -155,24 +125,14 @@ const actions = {
       sending: true
     })
 
-    const thread = firebase
-      .firestore()
-      .collection('threads')
-      .doc(threadId)
-
-    const user = firebase
-      .firestore()
-      .collection('users')
-      .doc(userId)
-
     await firebase
       .firestore()
       .collection('messages')
       .add({
         body,
         createdAt: new Date(),
-        thread,
-        user
+        threadId,
+        userId
       })
 
     setState({

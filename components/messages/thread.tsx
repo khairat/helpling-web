@@ -70,16 +70,16 @@ export const Thread: FunctionComponent<Props> = ({
         )}>
         {loading && messages.length === 0 && <Spinner className="m-8" />}
         {!loading && messages.length === 0 && <p>No messages yet.</p>}
-        {messages.map(({ _user, body, createdAt }, index) => (
+        {messages.map(({ body, createdAt, user }, index) => (
           <article key={index} className="flex mx-4 my-2 items-center">
-            <Link href={`/people/${_user.id}`}>
+            <Link href={`/people/${user.id}`}>
               <a
                 className={clsx(
                   'font-medium',
 
-                  _user.id === userId && 'text-gray-500'
+                  user.id === userId && 'text-gray-500'
                 )}>
-                {_user.name}
+                {user.name}
               </a>
             </Link>
             <div className="mx-4">

@@ -35,7 +35,7 @@ const Request: NextPage<Props> = ({ userId }) => {
   const render = (children: ReactNode) => (
     <>
       <Head>
-        <title>Request / _helper</title>
+        <title>Request / helpling</title>
       </Head>
 
       <Header loggedIn={!!userId} />
@@ -56,7 +56,7 @@ const Request: NextPage<Props> = ({ userId }) => {
       {loading && <Spinner className="mt-4" />}
       {!loading && request && (
         <section>
-          <div className="bg-primary p-4">
+          <div className="bg-primary p-4 rounded">
             {request.description
               .split('\n')
               .filter(Boolean)
@@ -68,8 +68,8 @@ const Request: NextPage<Props> = ({ userId }) => {
           </div>
           <div className="mt-4 flex flex-col lg:flex-row lg:items-center text-gray-400">
             <span>
-              <Link href={`/people/${request._user?.id}`}>
-                <a>{request._user?.name}</a>
+              <Link href={`/people/${request.user.id}`}>
+                <a>{request.user.name}</a>
               </Link>
             </span>
             <span className="mt-4 lg:mt-0 lg:ml-4">
@@ -92,10 +92,11 @@ const Request: NextPage<Props> = ({ userId }) => {
           </div>
           {request.user.id !== userId &&
             request.status === 'pending' &&
-            !request._helper && (
+            !request.helpling && (
               <div className="mt-12">
                 <p className="mt-4">Would you like to accept this request?</p>
                 <button
+                  className="mt-4"
                   onClick={async () => {
                     if (userId) {
                       await accept(requestId, userId)
@@ -107,29 +108,26 @@ const Request: NextPage<Props> = ({ userId }) => {
                 </button>
               </div>
             )}
-          {request._helper && request._helper.id === userId && (
+          {request.helpling && request.helpling.id === userId && (
             <div className="mt-12">
               <p className="mt-4">Bravo! You have accepted this request.</p>
-              <p className="mt-4">
-                Head on&nbsp;
-                <Link
-                  href={
-                    request.thread
-                      ? `/messages?thread=${request.thread.id}`
-                      : `/messages/new?request=${request.id}`
-                  }>
-                  <a>over here</a>
-                </Link>
-                &nbsp;to talk to {request._user?.name} to find out how to fulfil
-                this request.
-              </p>
+              {request.threadId && (
+                <p className="mt-4">
+                  Head on&nbsp;
+                  <Link href={`/messages?thread=${request.threadId}`}>
+                    <a>over here</a>
+                  </Link>
+                  &nbsp;to talk to {request.user.name} to find out how to fulfil
+                  this request.
+                </p>
+              )}
               {request.type === 'money' && (
                 <div className="my-8 bg-primary inline-block p-4">
                   <h3 className="text-xl font-semibold text-secondary">
                     Payment details
                   </h3>
                   <p className="mt-2">
-                    You can send money directly to {request._user?.name}.
+                    You can send money directly to {request.user.name}.
                   </p>
                   <p className="mt-4 flex">
                     <a
@@ -146,26 +144,23 @@ const Request: NextPage<Props> = ({ userId }) => {
               )}
             </div>
           )}
-          {request.user.id === userId && request._helper && (
+          {request.user.id === userId && request.helpling && (
             <div className="mt-12">
               <p className="mt-4">
-                <Link href={`/people/${request._helper.id}`}>
-                  <a>{request._helper.name}</a>
+                <Link href={`/people/${request.helpling.id}`}>
+                  <a>{request.helpling.name}</a>
                 </Link>
                 &nbsp; has accepted your request.
               </p>
-              <p className="mt-4">
-                Head on&nbsp;
-                <Link
-                  href={
-                    request.thread
-                      ? `/messages?thread=${request.thread.id}`
-                      : `/messages/new?request=${request.id}`
-                  }>
-                  <a>over here</a>
-                </Link>
-                &nbsp;to talk to them.
-              </p>
+              {request.threadId && (
+                <p className="mt-4">
+                  Head on&nbsp;
+                  <Link href={`/messages?thread=${request.threadId}`}>
+                    <a>over here</a>
+                  </Link>
+                  &nbsp;to talk to them.
+                </p>
+              )}
             </div>
           )}
         </section>

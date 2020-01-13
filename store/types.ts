@@ -8,23 +8,26 @@ export interface Request {
   id: string
   cashRequired?: number
   description: string
-  helper?: firestore.DocumentReference<User>
-  _helper?: User
+  helpling?: User
+  helplingId?: string
   paymentLink?: string
   paymentMethod?: RequestPaymentMethod
   status: RequestStatus
-  thread?: firestore.DocumentReference<Thread>
+  thread?: Thread
+  threadId?: string
   type: RequestType
-  user: firestore.DocumentReference<User>
-  _user?: User
+  user: User
+  userId: string
   createdAt: firestore.Timestamp
   updatedAt: firestore.Timestamp
 }
 
 export interface Thread {
   id: string
-  users: firestore.DocumentReference<User>[]
-  _users: User[]
+  request: Request
+  requestId: string
+  userIds: string[]
+  users: User[]
   createdAt: firestore.Timestamp
   updatedAt: firestore.Timestamp
 }
@@ -32,8 +35,8 @@ export interface Thread {
 export interface Message {
   id: string
   body: string
-  user: firestore.DocumentReference<User>
-  _user: User
+  user: User
+  userId: string
   createdAt: firestore.Timestamp
 }
 

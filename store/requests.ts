@@ -1,4 +1,3 @@
-import { firestore } from 'firebase/app'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
 import { firebase } from '../lib'
@@ -21,26 +20,22 @@ const initialState: State = {
   requests: []
 }
 
+const acceptRequest = firebase.functions().httpsCallable('acceptRequest')
+
 let unsubscribeFetchAll: () => void
 
 const actions = {
-  accept: (id: string, userId: string) => async ({ setState }: StoreApi) => {
+  accept: (requestId: string, helplingId: string) => async ({
+    setState
+  }: StoreApi) => {
     setState({
       accepting: true
     })
 
-    const helper = firestore()
-      .collection('users')
-      .doc(userId)
-
-    await firestore()
-      .collection('requests')
-      .doc(id)
-      .update({
-        helper,
-        status: 'accepted',
-        updatedAt: new Date()
-      })
+    await acceptRequest({
+      helplingId,
+      requestId
+    })
 
     setState({
       accepting: false
@@ -53,11 +48,6 @@ const actions = {
       creating: true
     })
 
-    const user = firebase
-      .firestore()
-      .collection('users')
-      .doc(userId)
-
     const { id } = await firebase
       .firestore()
       .collection('requests')
@@ -66,7 +56,7 @@ const actions = {
         createdAt: new Date(),
         status: 'pending',
         updatedAt: new Date(),
-        user
+        userId
       })
 
     setState({
@@ -97,19 +87,27 @@ const actions = {
             ...doc.data()
           } as Request
 
-          const user = await request.user.get()
+          const user = await firebase
+            .firestore()
+            .collection('users')
+            .doc(request.userId)
+            .get()
 
-          request._user = {
+          request.user = {
             id: user.id,
             ...user.data()
           } as User
 
-          if (request.helper) {
-            const helper = await request.helper.get()
+          if (request.helplingId) {
+            const helpling = await firebase
+              .firestore()
+              .collection('users')
+              .doc(request.helplingId)
+              .get()
 
-            request._helper = {
-              id: helper.id,
-              ...helper.data()
+            request.helpling = {
+              id: helpling.id,
+              ...helpling.data()
             } as User
           }
 
@@ -141,7 +139,7 @@ const actions = {
     unsubscribeFetchAll = firebase
       .firestore()
       .collection('requests')
-      .where('status', '==', 'pending')
+      .where('status', 'in', ['pending', 'accepted'])
       .orderBy('updatedAt', 'desc')
       .onSnapshot(({ docs }) => {
         let requests = docs.map(doc => ({
@@ -150,7 +148,7 @@ const actions = {
         })) as Request[]
 
         if (userId) {
-          requests = requests.filter(({ user }) => user.id !== userId)
+          requests = requests.filter(request => request.userId !== userId)
         }
 
         setState({

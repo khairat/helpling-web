@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import React, { FunctionComponent } from 'react'
 
+import { img_request_types } from '../../assets'
 import { Thread } from '../../store/types'
 import { Spinner } from '../spinner'
 
@@ -20,23 +21,46 @@ export const List: FunctionComponent<Props> = ({
   threads,
   userId
 }) => (
-  <aside id="list" className="bg-primary flex flex-col w-64 rounded">
+  <aside
+    id="list"
+    className={clsx(
+      'bg-primary',
+      'flex-col',
+      'flex',
+      'overflow-hidden',
+      'rounded',
+      'w-64',
+
+      threads.length === 0 && 'items-center justify-center'
+    )}>
     {loading && threads.length === 0 && <Spinner className="m-8" />}
     {!loading && threads.length === 0 && <p>No messages yet.</p>}
-    {threads.map(({ _users, id }, index) => (
+    {threads.map(({ id, request, users }, index) => (
       <a
         key={index}
-        className={clsx('p-4', threadId === id && 'bg-accent text-white')}
+        className={clsx(
+          'flex',
+          'items-center',
+          'justify-between',
+          'p-4',
+
+          threadId === id && 'bg-accent text-white'
+        )}
         href={`/messages?thread=${id}`}
         onClick={event => {
           event.preventDefault()
 
           onChange(id)
         }}>
-        {_users
+        {users
           .filter(({ id }) => id !== userId)
           .map(({ name }) => name)
           .join(', ')}
+        <img
+          className="h-8 w-8 ml-4"
+          alt={request.type}
+          src={img_request_types[request.type]}
+        />
       </a>
     ))}
   </aside>

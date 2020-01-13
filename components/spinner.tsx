@@ -8,12 +8,31 @@ export const Spinner: FunctionComponent<HTMLAttributes<HTMLDivElement>> = ({
 
     <style jsx>{`
       div {
-        animation: spinner 1s linear infinite;
-        border-radius: 100%;
-        border: 2px solid white;
-        border-top-color: transparent;
         height: 1.5em;
+        position: relative;
         width: 1.5em;
+      }
+
+      div:before,
+      div:after {
+        border-radius: 100%;
+        border: 2px solid transparent;
+        content: '';
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+
+      div:before {
+        animation: spinner 1s linear infinite;
+        border-top-color: white;
+        z-index: 1;
+      }
+
+      div:after {
+        border-color: #666;
       }
 
       @keyframes spinner {

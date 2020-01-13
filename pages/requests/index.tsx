@@ -1,26 +1,26 @@
-import { startCase } from 'lodash'
-import moment from 'moment'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 
-import { img_request_types } from '../../assets'
-import { Footer, Header, Spinner } from '../../components'
+import { Footer, Header } from '../../components'
+import { List } from '../../components/requests'
 import { auth, redirect } from '../../lib'
 import { useUser } from '../../store'
 
 interface Props {
-  userId?: string
+  userId: string
 }
 
 const Requests: NextPage<Props> = ({ userId }) => {
-  const [{ fetching, requests }, { fetchRequests }] = useUser()
+  const [
+    { fetching, requests, requestsHelpling },
+    { fetchRequests, fetchRequestsHelpling }
+  ] = useUser()
 
   useEffect(() => {
-    if (userId) {
-      fetchRequests(userId)
-    }
+    fetchRequests(userId)
+    fetchRequestsHelpling(userId)
   }, [])
 
   return (
@@ -42,60 +42,41 @@ const Requests: NextPage<Props> = ({ userId }) => {
             </Link>
           </nav>
         </header>
-        {fetching && <Spinner className="mt-4" />}
-        {!fetching && requests.length === 0 && (
-          <p>
-            Lucky you! You haven&apos;t created any requests for help. You
-            can&nbsp;
-            <Link href="/browse">
-              <a>browse</a>
-            </Link>
-            &nbsp;requests by other people or&nbsp;
-            <Link href="/requests/new">
-              <a>create your own</a>
-            </Link>
-            .
-          </p>
-        )}
-        {!fetching && requests.length > 0 && (
-          <div className="bg-primary overflow-auto rounded">
-            <table>
-              <thead>
-                <tr>
-                  <th>Request</th>
-                  <th className="text-center">Type</th>
-                  <th>Status</th>
-                  <th>Posted</th>
-                </tr>
-              </thead>
-              <tbody>
-                {requests.map(
-                  ({ createdAt, description, id, status, type }, index) => (
-                    <tr key={index}>
-                      <td>
-                        <Link href={`/requests/${id}`}>
-                          <a>{description}</a>
-                        </Link>
-                      </td>
-                      <td>
-                        <img
-                          alt={type}
-                          className="h-8 w-8 m-auto"
-                          src={img_request_types[type]}
-                          title={type}
-                        />
-                      </td>
-                      <td>{startCase(status)}</td>
-                      <td className="whitespace-no-wrap">
-                        {moment(createdAt.toDate()).fromNow()}
-                      </td>
-                    </tr>
-                  )
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <List
+          empty={
+            <p>
+              Lucky you! You haven&apos;t created any requests for help. You
+              can&nbsp;
+              <Link href="/browse">
+                <a>browse</a>
+              </Link>
+              &nbsp;requests by other people or&nbsp;
+              <Link href="/requests/new">
+                <a>create your own</a>
+              </Link>
+              .
+            </p>
+          }
+          loading={fetching}
+          requests={requests}
+        />
+        <h1 className="text-5xl font-semibold text-secondary my-8">
+          People you&apos;ve helped
+        </h1>
+        <List
+          empty={
+            <p>
+              Looks like you have&apos;t helped out anyone yet. Why miss an
+              opportunity?&nbsp;
+              <Link href="/browse">
+                <a>Browse requests</a>
+              </Link>
+              &nbsp;and make the world a better place!
+            </p>
+          }
+          loading={fetching}
+          requests={requestsHelpling}
+        />
       </main>
 
       <Footer />
@@ -105,7 +86,7 @@ const Requests: NextPage<Props> = ({ userId }) => {
 
 Requests.getInitialProps = async context => {
   const loggedIn = auth.isLoggedIn(context)
-  const userId = auth.getUserId(context)
+  const userId = auth.getUserId(context) as string
 
   if (!loggedIn) {
     redirect(context, '/sign-in')
