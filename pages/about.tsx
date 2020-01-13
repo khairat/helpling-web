@@ -54,7 +54,7 @@ const About: NextPage<Props> = ({ loggedIn }) => (
           anonymously ask, give, and receive. My first attempt was&nbsp;
           <a href="https://khair.at">Khairat</a>, a framework for charities.
         </p>
-        <p className="text-center mt-5 text-lg">
+        <p className="text-center mt-5 text-xl">
           Recently, I saw&nbsp;
           <a href="https://imgur.com/gallery/C2lHqaK">this post</a> on Imgur and
           decided that building a simpler platform would be faster and hopefully
