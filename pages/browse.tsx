@@ -64,7 +64,16 @@ const Browse: NextPage<Props> = ({ userId }) => {
                     <tr key={index}>
                       <td>
                         <Link href={`/requests/${id}`}>
-                          <a>{description}</a>
+                          <a>
+                            {description
+                              .split('\n')
+                              .filter(Boolean)
+                              .map((line, index) => (
+                                <p key={index} className="line">
+                                  {line}
+                                </p>
+                              ))}
+                          </a>
                         </Link>
                       </td>
                       <td>

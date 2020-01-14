@@ -158,6 +158,18 @@ table {
   }
 }
 
+.line {
+  @apply my-4;
+
+  &:first-child {
+    @apply mt-0;
+  }
+
+  &:last-child {
+    @apply mb-0;
+  }
+}
+
 // responsive
 
 @media (min-width: 640px) {

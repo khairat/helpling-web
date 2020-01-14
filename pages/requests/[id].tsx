@@ -61,7 +61,7 @@ const Request: NextPage<Props> = ({ userId }) => {
               .split('\n')
               .filter(Boolean)
               .map((line, index) => (
-                <p key={index} className="text-xl">
+                <p key={index} className="text-xl line">
                   {line}
                 </p>
               ))}
