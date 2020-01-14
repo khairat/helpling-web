@@ -27,6 +27,7 @@ export const List: FunctionComponent<Props> = ({
           <thead>
             <tr>
               <th>Request</th>
+              <th>Location</th>
               <th className="text-center">Type</th>
               <th>Status</th>
               <th>Posted</th>
@@ -34,7 +35,10 @@ export const List: FunctionComponent<Props> = ({
           </thead>
           <tbody>
             {requests.map(
-              ({ createdAt, description, id, status, type }, index) => (
+              (
+                { city, country, createdAt, description, id, status, type },
+                index
+              ) => (
                 <tr key={index}>
                   <td>
                     <Link href={`/requests/${id}`}>
@@ -49,6 +53,9 @@ export const List: FunctionComponent<Props> = ({
                           ))}
                       </a>
                     </Link>
+                  </td>
+                  <td>
+                    {city}, {country}
                   </td>
                   <td>
                     <img

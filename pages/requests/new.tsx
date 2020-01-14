@@ -1,11 +1,11 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Router from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Footer, Header, Spinner } from '../../components'
 import { auth, redirect } from '../../lib'
-import { useRequests } from '../../store'
+import { useRequests, useUser } from '../../store'
 import {
   RequestPaymentMethod,
   RequestPaymentMethods,
@@ -14,7 +14,7 @@ import {
 } from '../../store/types'
 
 interface Props {
-  userId?: string
+  userId: string
 }
 
 const NewRequest: NextPage<Props> = ({ userId }) => {
@@ -25,6 +25,13 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
   const [type, setType] = useState<RequestType>()
 
   const [{ creating }, { create }] = useRequests()
+  const [{ user }, { fetch }] = useUser()
+
+  useEffect(() => {
+    if (!user) {
+      fetch(userId)
+    }
+  }, [user])
 
   return (
     <>
@@ -40,8 +47,10 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
           onSubmit={async event => {
             event.preventDefault()
 
-            if (userId && description && type) {
+            if (user && description && type) {
               const data: Record<string, string | number> = {
+                city: user.city,
+                country: user.country,
                 description,
                 type
               }
@@ -169,6 +178,18 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
               value={description}
             />
           </label>
+          {user && (
+            <>
+              <label>
+                <span>City</span>
+                <input disabled placeholder="City" value={user.city} />
+              </label>
+              <label>
+                <span>Country</span>
+                <input disabled placeholder="Country" value={user.country} />
+              </label>
+            </>
+          )}
           <button>{creating ? <Spinner /> : 'Create'}</button>
         </form>
       </main>
@@ -180,7 +201,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
 
 NewRequest.getInitialProps = async context => {
   const loggedIn = auth.isLoggedIn(context)
-  const userId = auth.getUserId(context)
+  const userId = auth.getUserId(context) as string
 
   if (!loggedIn) {
     redirect(context, '/sign-in')

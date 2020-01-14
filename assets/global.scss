@@ -58,13 +58,17 @@ input,
 textarea,
 select {
   @apply appearance-none bg-primary rounded p-4 outline-none w-full;
+
+  &:disabled {
+    @apply text-gray-400;
+  }
 }
 
 label {
   @apply block my-8;
 
   span {
-    @apply block mb-4 font-medium;
+    @apply block mb-4 font-medium text-gray-400;
   }
 
   textarea {
