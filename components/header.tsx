@@ -75,7 +75,7 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
             <NavLink href="/messages">Messages</NavLink>
             <NavLink href="/profile">Profile</NavLink>
             <NavLink
-              href="/sign-out"
+              href="#sign-out"
               onClick={async event => {
                 event.preventDefault()
 
