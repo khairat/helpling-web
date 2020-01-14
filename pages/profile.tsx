@@ -7,7 +7,7 @@ import { auth, redirect } from '../lib'
 import { useUser } from '../store'
 
 interface Props {
-  userId?: string
+  userId: string
 }
 
 const Profile: NextPage<Props> = ({ userId }) => {
@@ -53,7 +53,7 @@ const Profile: NextPage<Props> = ({ userId }) => {
 
 Profile.getInitialProps = async context => {
   const loggedIn = auth.isLoggedIn(context)
-  const userId = auth.getUserId(context)
+  const userId = auth.getUserId(context) as string
 
   if (!loggedIn) {
     redirect(context, '/sign-in')

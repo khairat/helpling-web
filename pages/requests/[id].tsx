@@ -12,7 +12,7 @@ import { auth, redirect } from '../../lib'
 import { useRequests } from '../../store'
 
 interface Props {
-  userId?: string
+  userId: string
 }
 
 const Request: NextPage<Props> = ({ userId }) => {
@@ -98,11 +98,9 @@ const Request: NextPage<Props> = ({ userId }) => {
                 <button
                   className="mt-4"
                   onClick={async () => {
-                    if (userId) {
-                      await accept(requestId, userId)
+                    await accept(requestId, userId)
 
-                      fetch(requestId)
-                    }
+                    fetch(requestId)
                   }}>
                   {accepting ? <Spinner /> : 'Accept'}
                 </button>
@@ -171,7 +169,7 @@ const Request: NextPage<Props> = ({ userId }) => {
 
 Request.getInitialProps = async context => {
   const loggedIn = auth.isLoggedIn(context)
-  const userId = auth.getUserId(context)
+  const userId = auth.getUserId(context) as string
 
   if (!loggedIn) {
     redirect(context, '/sign-in')
