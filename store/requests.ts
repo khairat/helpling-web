@@ -81,7 +81,7 @@ const actions = {
         .firestore()
         .collection('requests')
         .doc(id)
-        .onSnapshot(async doc => {
+        .onSnapshot(async (doc) => {
           const request = {
             id: doc.id,
             ...doc.data()
@@ -142,13 +142,13 @@ const actions = {
       .where('status', 'in', ['pending', 'accepted'])
       .orderBy('updatedAt', 'desc')
       .onSnapshot(({ docs }) => {
-        let requests = docs.map(doc => ({
+        let requests = docs.map((doc) => ({
           id: doc.id,
           ...doc.data()
         })) as Request[]
 
         if (userId) {
-          requests = requests.filter(request => request.userId !== userId)
+          requests = requests.filter((request) => request.userId !== userId)
         }
 
         setState({

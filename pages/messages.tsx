@@ -48,7 +48,7 @@ const Messages: NextPage<Props> = ({ userId }) => {
         <section className="flex flex-1">
           <List
             loading={loading}
-            onChange={threadId => push(`/messages?thread=${threadId}`)}
+            onChange={(threadId) => push(`/messages?thread=${threadId}`)}
             threadId={threadId}
             threads={threads}
             userId={userId}
@@ -57,7 +57,7 @@ const Messages: NextPage<Props> = ({ userId }) => {
             <Thread
               loading={loadingMessages}
               messages={messages}
-              onReply={body => reply(threadId, userId, body)}
+              onReply={(body) => reply(threadId, userId, body)}
               userId={userId}
             />
           )}
@@ -69,7 +69,7 @@ const Messages: NextPage<Props> = ({ userId }) => {
   )
 }
 
-Messages.getInitialProps = context => {
+Messages.getInitialProps = (context) => {
   const loggedIn = auth.isLoggedIn(context)
   const userId = auth.getUserId(context) as string
 

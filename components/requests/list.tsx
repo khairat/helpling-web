@@ -3,7 +3,6 @@ import moment from 'moment'
 import Link from 'next/link'
 import React, { FunctionComponent, ReactNode } from 'react'
 
-import { img_request_types } from '../../assets'
 import { Request } from '../../store/types'
 import { Spinner } from '../spinner'
 
@@ -61,7 +60,7 @@ export const List: FunctionComponent<Props> = ({
                     <img
                       alt={type}
                       className="h-8 w-8 m-auto"
-                      src={img_request_types[type]}
+                      src={`/img/type_${type}.svg`}
                       title={type}
                     />
                   </td>

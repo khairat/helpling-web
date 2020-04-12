@@ -3,7 +3,6 @@ import Link from 'next/link'
 import Router from 'next/router'
 import React, { FunctionComponent, useState } from 'react'
 
-import { img_helpling, img_menu_close, img_menu_open } from '../assets'
 import { useUser } from '../store'
 import { NavLink } from './nav-link'
 
@@ -22,7 +21,7 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
         <a className="flex items-center text-white">
           <img
             className="h-12 w-12 my-8 ml-8 mr-4"
-            src={img_helpling}
+            src="/img/helpling.svg"
             alt="Helpling"
           />
           <span className="font-medium mr-8">Helpling</span>
@@ -38,14 +37,14 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
           visible ? 'fixed' : 'absolute'
         )}
         href="#menu"
-        onClick={event => {
+        onClick={(event) => {
           event.preventDefault()
 
           setVisible(!visible)
         }}>
         <img
           className="h-6 m-8 w-6"
-          src={visible ? img_menu_close : img_menu_open}
+          src={`/img/menu_${visible ? 'close' : 'open'}.svg`}
           alt="Menu"
         />
       </a>
@@ -76,7 +75,7 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
             <NavLink href="/profile">Profile</NavLink>
             <NavLink
               href="#sign-out"
-              onClick={async event => {
+              onClick={async (event) => {
                 event.preventDefault()
 
                 await signOut()

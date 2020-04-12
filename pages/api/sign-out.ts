@@ -6,12 +6,10 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
   response.setHeader(
     'set-cookie',
-    cookies.map(cookie =>
+    cookies.map((cookie) =>
       [
         cookie,
-        `Expires=${moment()
-          .subtract(1, 'year')
-          .toISOString()}`,
+        `Expires=${moment().subtract(1, 'year').toISOString()}`,
         'HttpOnly',
         'Path=/',
         process.env.NODE_ENV === 'production' && 'Secure'

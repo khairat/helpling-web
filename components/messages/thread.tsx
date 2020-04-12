@@ -93,7 +93,7 @@ export const Thread: FunctionComponent<Props> = ({
           </article>
         ))}
       </div>
-      <Reply onReply={body => onReply(body)} />
+      <Reply onReply={(body) => onReply(body)} />
     </section>
   )
 }

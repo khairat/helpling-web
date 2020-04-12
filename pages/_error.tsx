@@ -24,7 +24,7 @@ const ErrorPage: NextPage<Props> = ({ loggedIn, notFound }) => (
   </>
 )
 
-ErrorPage.getInitialProps = async context => {
+ErrorPage.getInitialProps = async (context) => {
   const loggedIn = auth.isLoggedIn(context)
 
   return {

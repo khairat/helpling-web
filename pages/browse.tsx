@@ -55,7 +55,7 @@ const Browse: NextPage<Props> = ({ userId }) => {
   )
 }
 
-Browse.getInitialProps = context => {
+Browse.getInitialProps = (context) => {
   const userId = auth.getUserId(context)
 
   return {

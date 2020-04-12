@@ -3,8 +3,9 @@ import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/router'
 import React, { AnchorHTMLAttributes, FunctionComponent } from 'react'
 
-export const NavLink: FunctionComponent<LinkProps &
-  AnchorHTMLAttributes<HTMLAnchorElement>> = ({ children, href, ...props }) => {
+export const NavLink: FunctionComponent<
+  LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>
+> = ({ children, href, ...props }) => {
   const { asPath } = useRouter()
 
   return (

@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import React, { FunctionComponent } from 'react'
 
-import { img_request_types } from '../../assets'
 import { Thread } from '../../store/types'
 import { Spinner } from '../spinner'
 
@@ -47,7 +46,7 @@ export const List: FunctionComponent<Props> = ({
           threadId === id && 'bg-accent text-white'
         )}
         href={`/messages?thread=${id}`}
-        onClick={event => {
+        onClick={(event) => {
           event.preventDefault()
 
           onChange(id)
@@ -59,7 +58,7 @@ export const List: FunctionComponent<Props> = ({
         <img
           className="h-8 w-8 ml-4"
           alt={request.type}
-          src={img_request_types[request.type]}
+          src={`/img/type_${request.type}.svg`}
         />
       </a>
     ))}

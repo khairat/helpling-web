@@ -11,8 +11,8 @@ export const Reply: FunctionComponent<Props> = ({ onReply }) => {
     <footer>
       <input
         className="rounded-none w-full bg-gray-800"
-        onChange={event => setBody(event.target.value)}
-        onKeyDown={event => {
+        onChange={(event) => setBody(event.target.value)}
+        onKeyDown={(event) => {
           if (event.key === 'Enter' && body.trim()) {
             onReply(body.trim())
 

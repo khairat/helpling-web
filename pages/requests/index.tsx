@@ -84,7 +84,7 @@ const Requests: NextPage<Props> = ({ userId }) => {
   )
 }
 
-Requests.getInitialProps = async context => {
+Requests.getInitialProps = async (context) => {
   const loggedIn = auth.isLoggedIn(context)
   const userId = auth.getUserId(context) as string
 

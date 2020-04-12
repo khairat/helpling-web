@@ -44,7 +44,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
       <main className="main">
         <h1 className="text-5xl font-semibold text-secondary">New request</h1>
         <form
-          onSubmit={async event => {
+          onSubmit={async (event) => {
             event.preventDefault()
 
             if (user && description && type) {
@@ -74,7 +74,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
           <label>
             <span>Type</span>
             <select
-              onChange={event => setType(event.target.value as RequestType)}
+              onChange={(event) => setType(event.target.value as RequestType)}
               placeholder="Type"
               required
               value={type}>
@@ -104,7 +104,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
               <label>
                 <span>Payment method</span>
                 <select
-                  onChange={event =>
+                  onChange={(event) =>
                     setPaymentMethod(event.target.value as RequestPaymentMethod)
                   }
                   placeholder="Method"
@@ -136,7 +136,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
                     so someone can send you cash.
                   </span>
                   <input
-                    onChange={event => setPaymentLink(event.target.value)}
+                    onChange={(event) => setPaymentLink(event.target.value)}
                     placeholder={
                       paymentMethod === 'cashApp'
                         ? '$Cashtag'
@@ -157,7 +157,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
                 <input
                   max={200}
                   min={10}
-                  onChange={event =>
+                  onChange={(event) =>
                     setCashRequired(Number(event.target.value))
                   }
                   placeholder="Cash"
@@ -172,7 +172,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
           <label>
             <span>Describe your request. What do you need?</span>
             <textarea
-              onChange={event => setDescription(event.target.value)}
+              onChange={(event) => setDescription(event.target.value)}
               placeholder="Description"
               required
               value={description}
@@ -199,7 +199,7 @@ const NewRequest: NextPage<Props> = ({ userId }) => {
   )
 }
 
-NewRequest.getInitialProps = async context => {
+NewRequest.getInitialProps = async (context) => {
   const loggedIn = auth.isLoggedIn(context)
   const userId = auth.getUserId(context) as string
 

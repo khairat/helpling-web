@@ -1,4 +1,8 @@
 {
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -16,12 +20,6 @@
   ],
   "rules": {
     "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/camelcase": [
-      "error",
-      {
-        "allow": ["img_*"]
-      }
-    ],
     "@typescript-eslint/explicit-function-return-type": "off",
     "prettier/prettier": "error",
     "react/prop-types": "off",

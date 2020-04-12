@@ -34,15 +34,15 @@ const actions = {
       .where('userIds', 'array-contains', userId)
       .orderBy('updatedAt', 'desc')
       .onSnapshot(async ({ docs }) => {
-        const threads = docs.map(doc => ({
+        const threads = docs.map((doc) => ({
           id: doc.id,
           ...doc.data()
         })) as Thread[]
 
         await Promise.all(
-          threads.map(async thread => {
+          threads.map(async (thread) => {
             const users = await Promise.all(
-              thread.userIds.map(async userId => {
+              thread.userIds.map(async (userId) => {
                 const user = await firebase
                   .firestore()
                   .collection('users')
@@ -61,7 +61,7 @@ const actions = {
         )
 
         await Promise.all(
-          threads.map(async thread => {
+          threads.map(async (thread) => {
             const request = await firebase
               .firestore()
               .collection('requests')
@@ -92,13 +92,13 @@ const actions = {
       .where('threadId', '==', threadId)
       .orderBy('createdAt', 'desc')
       .onSnapshot(async ({ docs }) => {
-        const messages = docs.map(doc => ({
+        const messages = docs.map((doc) => ({
           id: doc.id,
           ...doc.data()
         })) as Message[]
 
         await Promise.all(
-          messages.map(async message => {
+          messages.map(async (message) => {
             const user = await firebase
               .firestore()
               .collection('users')
@@ -125,15 +125,12 @@ const actions = {
       sending: true
     })
 
-    await firebase
-      .firestore()
-      .collection('messages')
-      .add({
-        body,
-        createdAt: new Date(),
-        threadId,
-        userId
-      })
+    await firebase.firestore().collection('messages').add({
+      body,
+      createdAt: new Date(),
+      threadId,
+      userId
+    })
 
     setState({
       sending: false

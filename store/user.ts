@@ -39,7 +39,7 @@ const actions = {
       .firestore()
       .collection('users')
       .doc(userId)
-      .onSnapshot(user => {
+      .onSnapshot((user) => {
         const data = user.data()
 
         if (data) {
@@ -68,7 +68,7 @@ const actions = {
       .where('userId', '==', userId)
       .orderBy('updatedAt', 'desc')
       .onSnapshot(({ docs }) => {
-        const requests = docs.map(doc => ({
+        const requests = docs.map((doc) => ({
           id: doc.id,
           ...doc.data()
         })) as Request[]
@@ -94,7 +94,7 @@ const actions = {
       .where('helplingId', '==', userId)
       .orderBy('updatedAt', 'desc')
       .onSnapshot(({ docs }) => {
-        const requestsHelpling = docs.map(doc => ({
+        const requestsHelpling = docs.map((doc) => ({
           id: doc.id,
           ...doc.data()
         })) as Request[]
@@ -140,15 +140,11 @@ const actions = {
         }
 
         if (isNew) {
-          await firebase
-            .firestore()
-            .collection('users')
-            .doc(user?.uid)
-            .set({
-              createdAt: new Date(),
-              id: user?.uid,
-              name: user?.displayName
-            })
+          await firebase.firestore().collection('users').doc(user?.uid).set({
+            createdAt: new Date(),
+            id: user?.uid,
+            name: user?.displayName
+          })
         }
 
         return isNew
@@ -177,11 +173,7 @@ const actions = {
       })
 
       try {
-        await firebase
-          .firestore()
-          .collection('users')
-          .doc(userId)
-          .update(data)
+        await firebase.firestore().collection('users').doc(userId).update(data)
       } finally {
         setState({
           loading: false

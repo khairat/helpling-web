@@ -11,8 +11,8 @@ const SignIn: NextPage = () => {
   const [error, setError] = useState('')
   const [isNew, setIsNew] = useState(false)
 
-  const [city, setCity] = useState()
-  const [country, setCountry] = useState()
+  const [city, setCity] = useState<string>()
+  const [country, setCountry] = useState<string>()
   const [name, setName] = useState('')
 
   const [{ loading }, { signIn, updateProfile }] = useUser()
@@ -32,7 +32,7 @@ const SignIn: NextPage = () => {
           {isNew ? (
             <form
               className="mt-8"
-              onSubmit={async event => {
+              onSubmit={async (event) => {
                 event.preventDefault()
 
                 if (name && city && country) {
@@ -54,7 +54,7 @@ const SignIn: NextPage = () => {
               <label>
                 <span>Pick a username</span>
                 <input
-                  onChange={event => setName(event.target.value)}
+                  onChange={(event) => setName(event.target.value)}
                   placeholder="Username"
                   required
                   type="text"
@@ -64,7 +64,7 @@ const SignIn: NextPage = () => {
               <label>
                 <span>Where are you from?</span>
                 <select
-                  onChange={event => {
+                  onChange={(event) => {
                     setCountry(event.target.value)
                     setCity(undefined)
                   }}
@@ -81,7 +81,7 @@ const SignIn: NextPage = () => {
               {country && (
                 <label>
                   <select
-                    onChange={event => setCity(event.target.value)}
+                    onChange={(event) => setCity(event.target.value)}
                     placeholder="Country"
                     required
                     value={city}>
@@ -126,7 +126,7 @@ const SignIn: NextPage = () => {
   )
 }
 
-SignIn.getInitialProps = context => {
+SignIn.getInitialProps = (context) => {
   const loggedIn = auth.isLoggedIn(context)
 
   if (loggedIn) {

@@ -1,7 +1,6 @@
 {
   "version": 2,
   "name": "helpling",
-  "regions": ["dub1", "sfo1"],
   "build": {
     "env": {
       "FIREBASE_ADMIN_CONFIG": "@helpling-firebase_admin_config",

@@ -50,7 +50,7 @@ const PrivacyPolicy: NextPage<Props> = ({ loggedIn }) => (
   </>
 )
 
-PrivacyPolicy.getInitialProps = context => {
+PrivacyPolicy.getInitialProps = (context) => {
   const loggedIn = auth.isLoggedIn(context)
 
   return {

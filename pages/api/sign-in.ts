@@ -15,9 +15,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
   const { uid } = await firebase.auth().verifyIdToken(token)
 
   const expiresIn = 60 * 60 * 24 * 10 * 1000
-  const expiry = moment()
-    .add(expiresIn, 'milliseconds')
-    .toISOString()
+  const expiry = moment().add(expiresIn, 'milliseconds').toISOString()
 
   const session = await firebase.auth().createSessionCookie(token, {
     expiresIn
@@ -27,7 +25,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
   response.setHeader(
     'set-cookie',
-    cookies.map(cookie =>
+    cookies.map((cookie) =>
       [
         cookie,
         `Expires=${expiry}`,

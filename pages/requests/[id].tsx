@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { ReactNode, useEffect, useState } from 'react'
 
-import { img_request_types } from '../../assets'
 import { Error, Footer, Header, Spinner } from '../../components'
 import { auth, redirect } from '../../lib'
 import { useRequests } from '../../store'
@@ -85,7 +84,7 @@ const Request: NextPage<Props> = ({ userId }) => {
               <img
                 className="h-10 w-10 mr-2"
                 alt={request.type}
-                src={img_request_types[request.type]}
+                src={`/img/type_${request.type}.svg`}
               />
               {startCase(request.type)}
             </span>
@@ -167,7 +166,7 @@ const Request: NextPage<Props> = ({ userId }) => {
   )
 }
 
-Request.getInitialProps = async context => {
+Request.getInitialProps = async (context) => {
   const loggedIn = auth.isLoggedIn(context)
   const userId = auth.getUserId(context) as string
 

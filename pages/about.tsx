@@ -82,7 +82,7 @@ const About: NextPage<Props> = ({ loggedIn }) => (
   </>
 )
 
-About.getInitialProps = context => {
+About.getInitialProps = (context) => {
   const loggedIn = auth.isLoggedIn(context)
 
   return {
