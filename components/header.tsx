@@ -1,19 +1,10 @@
-import clsx from 'clsx'
 import Link from 'next/link'
-import Router from 'next/router'
 import React, { FunctionComponent, useState } from 'react'
 
-import { useUser } from '../store'
 import { NavLink } from './nav-link'
 
-interface Props {
-  loggedIn?: boolean
-}
-
-export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
+export const Header: FunctionComponent = () => {
   const [visible, setVisible] = useState(false)
-
-  const [, { signOut }] = useUser()
 
   return (
     <header className="flex items-stretch justify-between">
@@ -24,18 +15,13 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
             src="/img/helpling.svg"
             alt="Helpling"
           />
-          <span className="font-medium mr-8">Helpling</span>
+          <span className="text-xl font-medium mr-8">Helpling</span>
         </a>
       </Link>
       <a
-        className={clsx(
-          'lg:hidden',
-          'right-0',
-          'top-0',
-          'z-20',
-
+        className={`lg:hidden right-0 top-0 z-20 ${
           visible ? 'fixed' : 'absolute'
-        )}
+        }`}
         href="#menu"
         onClick={(event) => {
           event.preventDefault()
@@ -49,49 +35,11 @@ export const Header: FunctionComponent<Props> = ({ loggedIn }) => {
         />
       </a>
       <nav
-        className={clsx(
-          'bg-modal',
-          'fixed',
-          'flex-col',
-          'inset-0',
-          'justify-center',
-          'overflow-y-auto',
-          'right-0',
-          'top-0',
-          'z-10',
-
-          visible ? 'flex' : 'hidden',
-
-          'lg:bg-transparent',
-          'lg:flex',
-          'lg:flex-row',
-          'lg:static'
-        )}>
-        {loggedIn && (
-          <>
-            <NavLink href="/browse">Browse</NavLink>
-            <NavLink href="/requests">Requests</NavLink>
-            <NavLink href="/messages">Messages</NavLink>
-            <NavLink href="/profile">Profile</NavLink>
-            <NavLink
-              href="#sign-out"
-              onClick={async (event) => {
-                event.preventDefault()
-
-                await signOut()
-
-                Router.push('/')
-              }}>
-              Sign out
-            </NavLink>
-          </>
-        )}
-        {!loggedIn && (
-          <>
-            <NavLink href="/browse">Browse</NavLink>
-            <NavLink href="/sign-in">Sign in</NavLink>
-          </>
-        )}
+        className={`bg-modal fixed flex-col inset-0 justify-center overflow-y-auto right-0 top-0 z-10 ${
+          visible ? 'flex' : 'hidden'
+        } lg:bg-transparent lg:flex lg:flex-row lg:static`}>
+        <NavLink href="/about">About</NavLink>
+        <NavLink href="/privacy">Privacy policy</NavLink>
       </nav>
     </header>
   )

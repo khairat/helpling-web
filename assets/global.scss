@@ -1,28 +1,6 @@
 // fonts
 
-@font-face {
-  font-family: 'CircularStd';
-  src: url('/fonts/CircularStd-Book.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'CircularStd';
-  src: url('/fonts/CircularStd-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'CircularStd';
-  src: url('/fonts/CircularStd-Bold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://rsms.me/inter/inter.css');
 
 // tailwind
 
@@ -32,84 +10,10 @@
 
 // global
 
-a,
-button {
-  @apply cursor-pointer;
-
-  transition: 0.2s;
-}
-
 a {
   @apply text-accent;
-}
 
-button,
-input {
-  &:focus {
-    @apply outline-none;
-  }
-}
-
-button {
-  @extend .button;
-}
-
-input,
-textarea,
-select {
-  @apply appearance-none bg-primary rounded p-4 outline-none w-full;
-
-  &:disabled {
-    @apply text-gray-400;
-  }
-}
-
-label {
-  @apply block my-8;
-
-  span {
-    @apply block mb-4 font-medium text-gray-400;
-  }
-
-  textarea {
-    min-height: 10em;
-  }
-}
-
-select {
-  background-image: url('/img/expand.svg');
-  background-position: calc(100% - 1em) center;
-  background-repeat: no-repeat;
-  background-size: 1.5em;
-}
-
-textarea {
-  min-height: 8em;
-}
-
-table {
-  @apply w-full;
-
-  thead {
-    tr {
-      @apply border-b border-gray-800;
-    }
-  }
-
-  tbody {
-    tr {
-      @apply border-t border-gray-900;
-    }
-  }
-
-  td,
-  th {
-    @apply align-middle text-left p-4;
-  }
-
-  th {
-    @apply font-semibold text-gray-500;
-  }
+  transition: 0.2s;
 }
 
 // layout
@@ -146,49 +50,42 @@ table {
 
 // components
 
-.button {
-  @apply flex items-center justify-center bg-accent rounded text-white px-8 py-4 font-semibold;
-
-  &:hover {
-    filter: brightness(1.2);
+.hero {
+  &:before {
+    background: #010f28;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
   }
 
-  &:active {
-    filter: brightness(0.8);
+  &:nth-child(odd):before {
+    clip-path: polygon(0 3em, 100% 0, 100% calc(100% - 3em), 0 100%);
   }
 
-  &.small {
-    @apply px-3 py-2;
-  }
-}
-
-.line {
-  @apply my-4;
-
-  &:first-child {
-    @apply mt-0;
-  }
-
-  &:last-child {
-    @apply mb-0;
+  &:nth-child(even):before {
+    clip-path: polygon(0 0, 100% 3em, 100% 100%, 0 calc(100% - 3em));
   }
 }
 
-// responsive
-
-@media (min-width: 640px) {
-  button {
-    max-width: 100%;
+.nav-link {
+  &:before {
+    content: '';
+    height: 1.5em;
+    margin: 0.1em 0 0 -0.1em;
+    position: absolute;
+    transition: 0.2s;
+    width: calc(100% - 4em);
+    transform: scale(0.1);
+    z-index: -1;
   }
 
-  input,
-  select,
-  textarea {
-    max-width: 100%;
-    width: 20rem;
-  }
-
-  textarea {
-    width: 30em;
+  &:hover:before,
+  &.active:before {
+    background: #ea5167;
+    transform: skew(-3deg, 2deg) scale(1.25);
   }
 }

@@ -3,19 +3,14 @@ import Head from 'next/head'
 import React from 'react'
 
 import { Footer, Header, Hero } from '../components'
-import { auth } from '../lib'
 
-interface Props {
-  loggedIn: boolean
-}
-
-const About: NextPage<Props> = ({ loggedIn }) => (
+const About: NextPage = () => (
   <>
     <Head>
       <title>About / Helpling</title>
     </Head>
 
-    <Header loggedIn={loggedIn} />
+    <Header />
 
     <main className="justify-center">
       <Hero>
@@ -81,13 +76,5 @@ const About: NextPage<Props> = ({ loggedIn }) => (
     <Footer />
   </>
 )
-
-About.getInitialProps = (context) => {
-  const loggedIn = auth.isLoggedIn(context)
-
-  return {
-    loggedIn
-  }
-}
 
 export default About

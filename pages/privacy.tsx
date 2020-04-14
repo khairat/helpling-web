@@ -3,19 +3,14 @@ import Head from 'next/head'
 import React from 'react'
 
 import { Footer, Header, Hero } from '../components'
-import { auth } from '../lib'
 
-interface Props {
-  loggedIn: boolean
-}
-
-const PrivacyPolicy: NextPage<Props> = ({ loggedIn }) => (
+const PrivacyPolicy: NextPage = () => (
   <>
     <Head>
       <title>Privacy policy / Helpling</title>
     </Head>
 
-    <Header loggedIn={loggedIn} />
+    <Header />
 
     <main className="justify-center">
       <Hero>
@@ -23,9 +18,9 @@ const PrivacyPolicy: NextPage<Props> = ({ loggedIn }) => (
           Privacy policy
         </h1>
         <p className="text-center mt-4">
-          You login with Google, so we have your email and name. You set your
-          own username and that&apos;s what other users see. I won&apos;t share
-          anything with any third-parties.
+          You login with Google or Apple, so I only have your email. You set
+          your own username and that&apos;s what other users see. I won&apos;t
+          share anything with any third-parties.
         </p>
         <p className="text-center mt-4">
           If you make requests for money, we also store your PayPal/Venmo/Cash
@@ -49,13 +44,5 @@ const PrivacyPolicy: NextPage<Props> = ({ loggedIn }) => (
     <Footer />
   </>
 )
-
-PrivacyPolicy.getInitialProps = (context) => {
-  const loggedIn = auth.isLoggedIn(context)
-
-  return {
-    loggedIn
-  }
-}
 
 export default PrivacyPolicy

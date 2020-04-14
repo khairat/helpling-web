@@ -1,11 +1,3 @@
 {
-  "version": 2,
-  "name": "helpling",
-  "build": {
-    "env": {
-      "FIREBASE_ADMIN_CONFIG": "@helpling-firebase_admin_config",
-      "FIREBASE_CONFIG": "@helpling-firebase_config",
-      "FIREBASE_DATABASE_URL": "@helpling-firebase_database_url"
-    }
-  }
+  "version": 2
 }

@@ -10,7 +10,7 @@ module.exports = {
       },
       fontFamily: {
         sans: [
-          'CircularStd',
+          'Inter',
           '-apple-system',
           'BlinkMacSystemFont',
           'Segoe UI',
@@ -20,13 +20,10 @@ module.exports = {
           'Apple Color Emoji',
           'Segoe UI Emoji'
         ]
-      },
-      width: {
-        signin: '20rem'
       }
     }
   },
   variants: {
-    margin: ['responsive', 'first']
+    margin: ['first']
   }
 }
