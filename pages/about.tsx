@@ -66,9 +66,11 @@ const About: NextPage = () => (
           <a href="https://github.com/helplingapp">GitHub</a>.
         </p>
         <p className="text-center mt-4 text-xl">
-          It&apos;s built with <a href="https://nextjs.org/">Next.js</a>,&nbsp;
-          <a href="https://www.typescriptlang.org/">TypeScript</a>, and&nbsp;
-          <a href="https://firebase.google.com/">Firebase</a>.
+          It&apos;s built with{' '}
+          <a href="https://reactnative.dev">React Native</a>
+          ,&nbsp;
+          <a href="https://www.typescriptlang.org">TypeScript</a>, and&nbsp;
+          <a href="https://firebase.google.com">Firebase</a>.
         </p>
       </Hero>
     </main>
