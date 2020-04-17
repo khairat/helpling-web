@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "N77AF777MZ.app.helpling",
+        "paths": [
+          "/offers/*",
+          "/requests/*",
+          "/threads/*"
+        ]
+      }
+    ]
+  }
+}
