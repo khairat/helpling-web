@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android",
+      "package_name": "app.helpling",
+      "sha256_cert_fingerprints": [
+        "FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C",
+        "6C:AF:58:40:2C:60:6B:C4:70:23:C2:E5:8D:93:DB:8B:72:7F:22:67:8E:A1:D8:8C:03:7D:BB:A5:0D:F6:4F:A5"
+      ]
+    }
+  }
+]

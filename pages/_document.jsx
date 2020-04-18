@@ -10,6 +10,8 @@ class Doc extends Document {
             name="description"
             content="Find people who need your help and help them"
           />
+          <meta name="apple-itunes-app" content="app-id=1508616704" />
+          <link rel="manifest" href="/manifest.json" />
         </Head>
         <body className="bg-primary text-white font-sans cursor-default outline-none">
           <Main />
