@@ -26,12 +26,12 @@ const Home: NextPage = () => (
         </h1>
         <section className="mt-4 flex flex-col lg:flex-row">
           <a
-            className="m-4 py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary"
+            className="m-4 text-center py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary"
             href="https://apps.apple.com/us/app/helpling/id1508616704">
             App Store
           </a>
           <a
-            className="m-4 py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary"
+            className="m-4 text-center py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary"
             href="https://play.google.com/store/apps/details?id=app.helpling">
             Google Play
           </a>
