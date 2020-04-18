@@ -19,7 +19,7 @@ const About: NextPage = () => (
         </h1>
         <p className="text-center mt-4 text-xl">
           Helpling is a place to help you find people who are less fortunate or
-          in dire circumstanes and see how you can help out.
+          in dire circumstances and see how you can help out.
         </p>
         <p className="text-center mt-4 text-xl">
           People can make requests for things; food, money, physical goods, and
