@@ -20,7 +20,7 @@ const Request: NextPage<Props> = ({ comments, request }) => (
     <Header />
 
     <main className="max-w-3xl">
-      <h1 className="text-5xl font-semibold text-accent mb-4">request</h1>
+      <h1 className="text-5xl font-semibold text-accent mb-4">Request</h1>
       <Item item={request} />
       <h2 className="text-3xl font-semibold text-secondary mt-8">
         Comments ({comments.length})
