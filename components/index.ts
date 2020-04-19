@@ -1,6 +1,8 @@
+export { Comment } from './comment'
 export { Error } from './error'
 export { Footer } from './footer'
 export { Header } from './header'
 export { Hero } from './hero'
+export { Item } from './item'
 export { NavLink } from './nav-link'
 export { PrivacyPolicy } from './privacy'
