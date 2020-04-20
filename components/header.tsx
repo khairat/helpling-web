@@ -15,7 +15,8 @@ export const Header: FunctionComponent = () => {
             src="/img/helpling.svg"
             alt="Helpling"
           />
-          <span className="text-xl font-medium mr-8">Helpling</span>
+          <span className="text-xl font-medium mr-4">Helpling</span>
+          <span className="text-gray-500 mr-8">beta</span>
         </a>
       </Link>
       <a

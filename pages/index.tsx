@@ -83,13 +83,14 @@ const Home: NextPage = () => (
       </Hero>
       <Hero>
         <h2 className="text-5xl font-semibold text-secondary text-center">
-          Download
+          Beta
         </h2>
         <section className="mt-4 flex flex-col lg:flex-row">
           <a
-            className="m-4 text-center py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary"
+            className="m-4 text-center py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary flex items-center"
             href="https://testflight.apple.com/join/PQSjkuHG">
-            App Store beta
+            <img className="h-8 w-8 mr-4" src="/img/download_app_store.svg" />
+            App Store
           </a>
         </section>
       </Hero>
