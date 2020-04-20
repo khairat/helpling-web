@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
 
-import { Footer, Header, Hero, PrivacyPolicy } from '../components'
+import { Footer, Header, Hero } from '../components'
 
 const Home: NextPage = () => (
   <>
@@ -21,80 +21,78 @@ const Home: NextPage = () => (
         </p>
       </Hero>
       <Hero>
-        <h1 className="text-5xl font-semibold text-secondary text-center">
-          Download
-        </h1>
-        <section className="mt-4 flex flex-col lg:flex-row">
-          <a
-            className="m-4 text-center py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary"
-            href="https://apps.apple.com/us/app/helpling/id1508616704">
-            App Store
-          </a>
-          <a
-            className="m-4 text-center py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary"
-            href="https://play.google.com/store/apps/details?id=app.helpling">
-            Google Play
-          </a>
+        <h2 className="text-5xl font-semibold text-accent text-center">
+          How does it work?
+        </h2>
+        <p className="text-center text-xl mt-4">
+          If you need help, you create a request for help. Someone who is
+          willing to help will accept it and help out.
+        </p>
+        <p className="text-center text-xl mt-4">
+          If you&apos;re looking to help, you can look at existing requests and
+          accept them. Or you can create an offer for help and someone looking
+          for help will accept it.
+        </p>
+        <h3 className="text-2xl font-semibold text-secondary text-center mt-8">
+          There are four categories of offers and requests
+        </h3>
+        <section className="flex mt-4 flex-col lg:flex-row lg:flex-wrap lg:max-w-3xl">
+          <article className="p-4 lg:w-1/2">
+            <img className="w-40 h-40 m-auto block" src="/img/type_food.svg" />
+            <h4 className="text-3xl text-accent font-medium text-center">
+              Food
+            </h4>
+            <p className="text-center">
+              Haven&apos;t received your salary yet or unexpected expenses
+              prevent you from buying food or groceries?
+            </p>
+          </article>
+          <article className="p-4 lg:w-1/2">
+            <img
+              className="w-40 h-40 m-auto block"
+              src="/img/type_invite.svg"
+            />
+            <h4 className="text-3xl text-accent font-medium text-center">
+              Invites
+            </h4>
+            <p className="text-center">
+              Need help getting a job interview? Or just moved to a new city and
+              don&apos;t know anyone?
+            </p>
+          </article>
+          <article className="p-4 lg:w-1/2">
+            <img className="w-40 h-40 m-auto block" src="/img/type_money.svg" />
+            <h4 className="text-3xl text-accent font-medium text-center">
+              Money
+            </h4>
+            <p className="text-center">Need financial help?</p>
+          </article>
+          <article className="p-4 lg:w-1/2">
+            <img
+              className="w-40 h-40 m-auto block"
+              src="/img/type_physical.svg"
+            />
+            <h4 className="text-3xl text-accent font-medium text-center">
+              Things
+            </h4>
+            <p className="text-center">
+              Moved to a new apartment and need some furniture?
+            </p>
+          </article>
         </section>
       </Hero>
       <Hero>
-        <h2 className="text-5xl font-semibold text-accent text-center">
-          About Helpling
-        </h2>
-        <p className="text-center mt-4 text-xl">
-          Helpling is a place to help you find people who are less fortunate or
-          in dire circumstances and see how you can help out.
-        </p>
-        <p className="text-center mt-4 text-xl">
-          People can make requests for things; food, money, physical goods, and
-          invites.
-        </p>
-        <p className="text-center mt-4 text-xl">
-          Whether they need warm food on a cold night, some cash to travel to
-          see family, a new couch or mattress, or an job interview; you can step
-          in and help them.
-        </p>
-      </Hero>
-      <Hero>
         <h2 className="text-5xl font-semibold text-secondary text-center">
-          History
+          Download
         </h2>
-        <p className="text-center mt-4 text-xl">
-          When I was 16, I missed an opportunity to feed someone out of
-          stupidity. {new Date().getFullYear() - 2008} years later, I still
-          regret it.
-        </p>
-        <p className="text-center mt-5 text-xl">
-          But that incident instilled in me a desire to help people, especially
-          those who are struggling to feed themselves.
-        </p>
-        <p className="text-center mt-5 text-xl">
-          Over the years, I&apos;ve tried to build a platform where people can
-          anonymously ask, give, and receive. My first attempt was{' '}
-          <a href="https://khair.at">Khairat</a>, a framework for charities.
-        </p>
-        <p className="text-center mt-5 text-xl">
-          Recently, I saw{' '}
-          <a href="https://imgur.com/gallery/C2lHqaK">this post</a> on Imgur and
-          decided that building a simpler platform would be faster and hopefully
-          make the world a better place.
-        </p>
+        <section className="mt-4 flex flex-col lg:flex-row">
+          <a
+            className="m-4 text-center py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary"
+            href="https://testflight.apple.com/join/PQSjkuHG">
+            App Store beta
+          </a>
+        </section>
       </Hero>
-      <Hero>
-        <h2 className="text-5xl font-semibold text-accent text-center">Tech</h2>
-        <p className="text-center mt-4 text-xl">
-          Helpling is built with open-source technology and the source code is
-          publicly available on{' '}
-          <a href="https://github.com/helplingapp">GitHub</a>.
-        </p>
-        <p className="text-center mt-4 text-xl">
-          It&apos;s built with{' '}
-          <a href="https://reactnative.dev">React Native</a>,{' '}
-          <a href="https://www.typescriptlang.org">TypeScript</a>, and{' '}
-          <a href="https://firebase.google.com">Firebase</a>.
-        </p>
-      </Hero>
-      <PrivacyPolicy />
     </main>
 
     <Footer />

@@ -30,6 +30,6 @@ module.exports = {
     }
   },
   variants: {
-    margin: ['responsive', 'last']
+    margin: ['responsive', 'first', 'last']
   }
 }
