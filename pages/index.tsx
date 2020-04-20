@@ -90,7 +90,7 @@ const Home: NextPage = () => (
             className="m-4 text-center py-4 px-8 bg-accent text-white text-xl font-medium rounded-full hover:bg-secondary flex items-center"
             href="https://testflight.apple.com/join/PQSjkuHG">
             <img className="h-8 w-8 mr-4" src="/img/download_app_store.svg" />
-            App Store
+            TestFlight
           </a>
         </section>
       </Hero>
