@@ -27,7 +27,7 @@ const Privacy: NextPage = () => (
         </p>
         <p className="text-center mt-4 text-xl">
           Whether they need warm food on a cold night, some cash to travel to
-          see family, a new couch or mattress, or an job interview; you can step
+          see family, a new couch or mattress, or a job interview; you can step
           in and help them.
         </p>
       </Hero>
