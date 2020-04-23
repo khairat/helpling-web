@@ -50,10 +50,9 @@ const Privacy: NextPage = () => (
           <a href="https://khair.at">Khairat</a>, a framework for charities.
         </p>
         <p className="text-center mt-5 text-xl">
-          Recently, I saw{' '}
-          <a href="https://imgur.com/gallery/C2lHqaK">this post</a> on Imgur and
-          decided that building a simpler platform would be faster and hopefully
-          make the world a better place.
+          However, Khairat was large is scope and never left the planning stage.
+          So I decided that building a simpler platform would be faster and
+          hopefully make the world a better place.
         </p>
       </Hero>
       <Hero>
