@@ -1,8 +1,0 @@
-{
-  "version": 2,
-  "build": {
-    "env": {
-      "API_URI": "@helpling-api_uri"
-    }
-  }
-}
